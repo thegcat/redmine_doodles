@@ -6,5 +6,5 @@ class Doodle < ActiveRecord::Base
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
   has_many :responses, :class_name => 'DoodleAnswers', :dependent => :destroy, :order => "updated_on", :include => [:author]
   
-  validates_presence_of :name, :options
+  validates_presence_of :title, :options
 end
