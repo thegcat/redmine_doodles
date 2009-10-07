@@ -1,0 +1,44 @@
+<h2>Doodle #<%= @doodle.id %></h2>
+
+<div class="issue details">
+  <%= avatar(@author, :size => "64") %>
+  <h3><%=h @doodle.title %></h3>
+  <p class="author">
+    <%= authoring @doodle.created_on, @doodle.author %>
+  </p>
+  <p><strong><%=l(:field_expiry_date)%></strong>: <%= @doodle.expiry_date %></p>
+  <hr />
+  <p><strong><%=l(:field_description)%></strong></p>
+</div>
+<table class="list doodle">
+  <thead>
+    <tr>
+      <td> </td>
+      <% @doodle.options.each do |option| %>
+        <th><%= option %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reponses.each do |response| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <td><%= avatar(response.author, :size => "24")%><%=h response.author.name %></td>
+      <% response.answers_with_css_classes.each do |answer,css| %>
+        <td class="<%= css%>"><%=h answer%></td>
+      <% end %>
+      </tr>
+    <% end %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= avatar(User.current, :size => "24") %><%=h User.current.name %></td>
+      <% 0.upto(@doodle.options.length-1) do |i| %>
+        <td> </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'redmine_doodles.css', :plugin => "redmine_doodles" %>
+<% end %>
+
+<% html_title "Doodle #{@doodle.id}: #{@doodle.title}" -%>

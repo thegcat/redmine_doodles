@@ -1,0 +1,39 @@
+<div class="contextual">
+<%= link_to_if_authorized(l(:label_doodle_new),
+                          {:controller => 'doodles', :action => 'new', :project_id => @project},
+                          :class => 'icon icon-add',
+                          :onclick => 'Element.show("add-doodle"); Form.Element.focus("doodle_title"); return false;') if @project %>
+</div>
+
+<div id="add-doodle" style="display:none;">
+<h2><%= l(:label_doodle_new) %></h2>
+<% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'new', :project_id => @project }, :html => { :id => 'doodle-form' } do |f| %>
+<%= render :partial => 'doodles/form', :locals => { :f => f } %>
+<%= submit_tag l(:button_create) %>
+<%= link_to l(:button_cancel), '#', :onclick => 'Element.hide("add-doodle")' %>
+<% end if @project %>
+</div>
+
+<h2><%= l(:label_doodle_plural)%></h2>
+
+<% if @doodles.empty? %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% else %>
+<% @doodles.each do |doodle| %>
+  <h3><%= link_to h(doodle.name), :controller => 'doodles', :action => 'show', :id => doodle %></h3>
+  <p class="author"><%= authoring doodle.created_on, doodle.author %></p>
+  <div class ="doodle">
+      <ul>
+        <% doodle.options.each do |option| %>
+          <li><%= option %></li>
+        <% end %>
+      </ul>
+      </div>
+<% end %>
+<% end %>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'redmine_doodles.css', :plugin => "redmine_doodles" %>
+<% end %>
+
+<% html_title l(:label_doodle_plural) -%>
