@@ -20,7 +20,7 @@
 <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
 <% @doodles.each do |doodle| %>
-  <h3><%= link_to h(doodle.name), :controller => 'doodles', :action => 'show', :id => doodle %></h3>
+  <h3><%= link_to h(doodle.title), :controller => 'doodles', :action => 'show', :id => doodle %></h3>
   <p class="author"><%= authoring doodle.created_on, doodle.author %></p>
   <div class ="doodle">
       <ul>
