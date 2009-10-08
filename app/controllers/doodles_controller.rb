@@ -1,8 +1,8 @@
 class DoodlesController < ApplicationController
   unloadable
   
-  before_filter :find_project, :only => [:index, :new]
-  before_filter :find_doodle, :only => [:show]
+  before_filter :find_project, :except => [:show, :destroy]
+  before_filter :find_doodle, :only => [:show, :destroy]
   before_filter :authorize
   
   def index
@@ -10,7 +10,7 @@ class DoodlesController < ApplicationController
   end
 
   def new
-    @doodle = Doodle.new(:project => @project, :author => User.current)
+    @doodle = Doodle.new(:project => @project)
   end
 
   def show
@@ -21,6 +21,18 @@ class DoodlesController < ApplicationController
   end
 
   def destroy
+  end
+  
+  def create
+    @doodle = Doodle.new(:project => @project, :author => User.current)
+    @doodle.options = params[:doodle].delete(:options).split(',').map! { |s| s.squeeze(" ").strip }
+    @doodle.attributes = params[:doodle]
+    if @doodle.save
+      flash[:notice] = l(:notice_successful_create)
+      redirect_to :action => 'show', :id => @doodle
+    else
+      redirect_to :action => 'index', :project_id => @project
+    end
   end
   
   private

@@ -2,4 +2,5 @@
 <div class="box tabular">
   <p><%= f.text_field :title, :required => true, :size => 60 %></p>
   <p><%= f.text_field :expiry_date, :size => 10 %><%= calendar_for('doodle_expiry_date') %></p>
+  <p><%= f.text_field :options, :require => true, :size => 60 %></p>
 </div>

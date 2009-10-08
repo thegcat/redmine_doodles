@@ -6,7 +6,7 @@
   <p class="author">
     <%= authoring @doodle.created_on, @doodle.author %>
   </p>
-  <p><strong><%=l(:field_expiry_date)%></strong>: <%= @doodle.expiry_date %></p>
+  <p><strong><%=l(:field_expiry_date)%></strong>: <%= format_date(@doodle.expiry_date) %></p>
   <hr />
   <p><strong><%=l(:field_description)%></strong>: <%= @doodle.description %></p>
 </div>
@@ -15,7 +15,7 @@
     <tr>
       <td> </td>
       <% @doodle.options.each do |option| %>
-        <th><%= option %></th>
+        <th><%=h option %></th>
       <% end %>
     </tr>
   </thead>
@@ -24,7 +24,7 @@
       <tr class="<%= cycle('odd', 'even') %>">
         <td><%= avatar(response.author, :size => "24")%><%=h response.author.name %></td>
       <% response.answers_with_css_classes.each do |answer,css| %>
-        <td class="<%= css%>"><%=h answer%></td>
+        <td class="<%= css %>"><%=h answer %></td>
       <% end %>
       </tr>
     <% end %>

@@ -7,7 +7,7 @@
 
 <div id="add-doodle" style="display:none;">
 <h2><%= l(:label_doodle_new) %></h2>
-<% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'new', :project_id => @project }, :html => { :id => 'doodle-form' } do |f| %>
+<% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'create', :project_id => @project }, :html => { :id => 'doodle-form' } do |f| %>
 <%= render :partial => 'doodles/form', :locals => { :f => f } %>
 <%= submit_tag l(:button_create) %>
 <%= link_to l(:button_cancel), '#', :onclick => 'Element.hide("add-doodle")' %>
@@ -25,7 +25,7 @@
   <div class ="doodle">
       <ul>
         <% doodle.options.each do |option| %>
-          <li><%= option %></li>
+          <li><%=h option %></li>
         <% end %>
       </ul>
       </div>
