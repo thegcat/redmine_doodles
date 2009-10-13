@@ -1,8 +1,8 @@
 class DoodlesController < ApplicationController
   unloadable
   
-  before_filter :find_project, :except => [:show, :destroy]
-  before_filter :find_doodle, :only => [:show, :destroy]
+  before_filter :find_project, :except => [:show, :destroy, :update]
+  before_filter :find_doodle, :only => [:show, :destroy, :update]
   before_filter :authorize
   
   def index
@@ -18,6 +18,7 @@ class DoodlesController < ApplicationController
     @reponses = @doodle.responses
     @comments = @doodle.comments
     @comments.reverse! if User.current.wants_comments_in_reverse_order?
+    @ans = @doodle.options
   end
 
   def destroy
@@ -32,6 +33,20 @@ class DoodlesController < ApplicationController
       redirect_to :action => 'show', :id => @doodle
     else
       redirect_to :action => 'index', :project_id => @project
+    end
+  end
+  
+  def update
+    user = User.current
+    answers = @doodle.options.collect { |t| params[:answers].include?(@doodle.options.index(t).to_s) }
+    response = @doodle.responses.find_or_initialize_by_author_id(user.id)
+    response.answers = answers
+    if response.save
+      flash[:notice] = l(:doodle_update_successfull)
+      redirect_to :action => 'show', :id => @doodle
+    else
+      flash[:warning] = l(:doodle_update_unseccessfull)
+      redirect_to :action => 'show', :id => @doodle
     end
   end
   

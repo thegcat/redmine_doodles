@@ -10,6 +10,7 @@
   <hr />
   <p><strong><%=l(:field_description)%></strong>: <%= @doodle.description %></p>
 </div>
+<% form_tag({:action => 'update', :id => @doodle}, {:method => :put}) do %>
 <table class="list doodle">
   <thead>
     <tr>
@@ -30,12 +31,14 @@
     <% end %>
     <tr class="<%= cycle('odd', 'even') %>">
       <td><%= avatar(User.current, :size => "24") %><%=h User.current.name %></td>
-      <% 0.upto(@doodle.options.length-1) do |i| %>
-        <td> </td>
+      <% @ans.each do |an| %>
+        <td><%= check_box_tag "answers[]", @ans.index(an) %></td>
       <% end %>
     </tr>
   </tbody>
 </table>
+<%= submit_tag l(:button_create) %>
+<% end %>
 
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'redmine_doodles.css', :plugin => "redmine_doodles" %>
