@@ -26,19 +26,19 @@ class DoodlesController < ApplicationController
   
   def create
     @doodle = Doodle.new(:project => @project, :author => User.current)
-    @doodle.options = params[:doodle].delete(:options).split(',').map! { |s| s.squeeze(" ").strip }
     @doodle.attributes = params[:doodle]
     if @doodle.save
       flash[:notice] = l(:notice_successful_create)
       redirect_to :action => 'show', :id => @doodle
     else
-      redirect_to :action => 'index', :project_id => @project
+        render :action => 'new', :project_id => @project
     end
   end
   
   def update
     user = User.current
-    answers = @doodle.options.collect { |t| params[:answers].include?(@doodle.options.index(t).to_s) }
+    answers = @doodle.options.collect { |t| params[:answers].include?(@doodle.options.index(t).to_s) } if params[:answers]
+    answers ||= Array.new(@doodle.options.size, false)
     response = @doodle.responses.find_or_initialize_by_author_id(user.id)
     response.answers = answers
     if response.save

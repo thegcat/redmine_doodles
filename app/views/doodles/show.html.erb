@@ -8,7 +8,10 @@
   </p>
   <p><strong><%=l(:field_expiry_date)%></strong>: <%= format_date(@doodle.expiry_date) %></p>
   <hr />
-  <p><strong><%=l(:field_description)%></strong>: <%= @doodle.description %></p>
+  <p><strong><%=l(:field_description)%></strong></p>
+  <div class="wiki">
+  <%= textilizable(@doodle.description) %>
+  </div>
 </div>
 <% form_tag({:action => 'update', :id => @doodle}, {:method => :put}) do %>
 <table class="list doodle">
@@ -25,10 +28,16 @@
       <tr class="<%= cycle('odd', 'even') %>">
         <td><%= avatar(response.author, :size => "24")%><%=h response.author.name %></td>
       <% response.answers_with_css_classes.each do |answer,css| %>
-        <td class="<%= css %>"><%=h answer %></td>
+        <td class="<%= css %>"><%= check_box_tag "answers_#{response.id}[]", true, answer, :disabled => true %></td>
       <% end %>
       </tr>
     <% end %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= l(:label_result_plural)%></td>
+      <% @doodle.results.each do |res| %>
+        <td><%= res %></td>
+      <% end %>
+    </tr>
     <tr class="<%= cycle('odd', 'even') %>">
       <td><%= avatar(User.current, :size => "24") %><%=h User.current.name %></td>
       <% @ans.each do |an| %>
