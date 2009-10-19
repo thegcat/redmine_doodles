@@ -1,5 +1,8 @@
-<h2>Doodles#new</h2>
-
+<h2><%= l(:label_doodle_new) %></h2>
+<% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'create', :project_id => @project }, :html => { :id => 'doodle-form' } do |f| %>
+<%= render :partial => 'doodles/form', :locals => { :f => f } %>
+<%= submit_tag l(:button_create) %>
+<% end if @project %>
 
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'redmine_doodles.css', :plugin => "redmine_doodles" %>

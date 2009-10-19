@@ -2,6 +2,7 @@
 en:
   label_doodle_new: "New doodle"
   label_doodle_plural: "Doodles"
+  label_add_options: "Add options"
   field_expiry_date: "Expiration date"
-  field_options: "Options, comma-separated"
+  field_option: "Option"
 
