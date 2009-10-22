@@ -7,7 +7,6 @@ class Doodle < ActiveRecord::Base
   has_many :responses, :class_name => 'DoodleAnswers', :dependent => :destroy, :order => "updated_on", :include => [:author]
   
   validates_presence_of :title, :options
-  validates_length_of :options, :minimum => 1
   
   before_validation :sanitize_options
   
@@ -18,7 +17,9 @@ class Doodle < ActiveRecord::Base
   private
   
   def sanitize_options
-    options.map! { |string| string.squeeze(" ").strip }
-    options.delete_if { |string| string.empty? }
+    if options
+      options.map! { |string| string.squeeze(" ").strip }
+      options.delete_if { |string| string.empty? }
+    end
   end
 end

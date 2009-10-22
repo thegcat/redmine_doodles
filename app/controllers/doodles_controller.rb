@@ -15,10 +15,12 @@ class DoodlesController < ApplicationController
 
   def show
     @author = @doodle.author
-    @reponses = @doodle.responses
+    @responses = @doodle.responses
+    response = @responses.find_or_initialize_by_author_id(User.current.id)
+    response.answers ||= Array.new(@doodle.options.size, false)
+    @responses = @responses | [ response ]
     @comments = @doodle.comments
     @comments.reverse! if User.current.wants_comments_in_reverse_order?
-    @ans = @doodle.options
   end
 
   def destroy
@@ -31,14 +33,14 @@ class DoodlesController < ApplicationController
       flash[:notice] = l(:notice_successful_create)
       redirect_to :action => 'show', :id => @doodle
     else
-        render :action => 'new', :project_id => @project
+      render :action => 'new', :project_id => @project
     end
   end
   
   def update
     user = User.current
-    answers = @doodle.options.collect { |t| params[:answers].include?(@doodle.options.index(t).to_s) } if params[:answers]
-    answers ||= Array.new(@doodle.options.size, false)
+    params[:answers] ||= []
+    answers = Array.new(@doodle.options.size) { |index| params[:answers].include?(index.to_s) }
     response = @doodle.responses.find_or_initialize_by_author_id(user.id)
     response.answers = answers
     if response.save
