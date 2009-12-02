@@ -42,7 +42,7 @@ class DoodlesController < ApplicationController
     @user = User.current
     params[:answers] ||= []
     @answers = Array.new(@doodle.options.size) { |index| params[:answers].include?(index.to_s) }
-    @response = @doodle.responses.find_or_initialize_by_author_id(user.id)
+    @response = @doodle.responses.find_or_initialize_by_author_id(@user.id)
     @response.answers = @answers
     if @response.save
       flash[:notice] = l(:doodle_update_successfull)

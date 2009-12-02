@@ -23,7 +23,7 @@
   <h3><%= link_to h(doodle.title), :controller => 'doodles', :action => 'show', :id => doodle %></h3>
   <p class="author"><%= authoring doodle.created_on, doodle.author %></p>
   <div class="wiki">
-  <%= textilizable(doodle.description[0,254] + (doodle.description[254].nil? ? "" : "…")) %>
+  <%= textilizable(doodle.description[0,254] + (doodle.description[254].nil? ? "" : "…")) unless doodle.description.nil? %>
   </div>
 <% end %>
 <% end %>

@@ -12,7 +12,7 @@ Redmine::Plugin.register :redmine_doodles do
   name 'Redmine Doodles plugin'
   author 'Felix Schäfer'
   description 'Per project doodles'
-  version '0.1'
+  version '0.1.1'
   
   project_module :doodles do
     permission :view_doodles, { :doodles => [:index, :show, :new, :create, :update]}
