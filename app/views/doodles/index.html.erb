@@ -22,13 +22,9 @@
 <% @doodles.each do |doodle| %>
   <h3><%= link_to h(doodle.title), :controller => 'doodles', :action => 'show', :id => doodle %></h3>
   <p class="author"><%= authoring doodle.created_on, doodle.author %></p>
-  <div class ="doodle">
-      <ul>
-        <% doodle.options.each do |option| %>
-          <li><%=h option %></li>
-        <% end %>
-      </ul>
-      </div>
+  <div class="wiki">
+  <%= textilizable(doodle.description[0,254] + (doodle.description[254].nil? ? "" : "…")) %>
+  </div>
 <% end %>
 <% end %>
 

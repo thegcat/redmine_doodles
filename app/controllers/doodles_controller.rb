@@ -6,7 +6,7 @@ class DoodlesController < ApplicationController
   before_filter :authorize
   
   def index
-    @doodles = @project.doodles
+    @doodles = @project.doodles.reverse
   end
 
   def new
@@ -16,11 +16,12 @@ class DoodlesController < ApplicationController
   def show
     @author = @doodle.author
     @responses = @doodle.responses
-    response = @responses.find_or_initialize_by_author_id(User.current.id)
-    response.answers ||= Array.new(@doodle.options.size, false)
-    @responses = @responses | [ response ]
-    @comments = @doodle.comments
-    @comments.reverse! if User.current.wants_comments_in_reverse_order?
+    @response = @responses.find_or_initialize_by_author_id(User.current.id)
+    @response.answers ||= Array.new(@doodle.options.size, false)
+    @responses = @responses | [ @response ]
+    # Code later needed for comments
+    #@comments = @doodle.comments
+    #@comments.reverse! if User.current.wants_comments_in_reverse_order?
   end
 
   def destroy
@@ -38,12 +39,12 @@ class DoodlesController < ApplicationController
   end
   
   def update
-    user = User.current
+    @user = User.current
     params[:answers] ||= []
-    answers = Array.new(@doodle.options.size) { |index| params[:answers].include?(index.to_s) }
-    response = @doodle.responses.find_or_initialize_by_author_id(user.id)
-    response.answers = answers
-    if response.save
+    @answers = Array.new(@doodle.options.size) { |index| params[:answers].include?(index.to_s) }
+    @response = @doodle.responses.find_or_initialize_by_author_id(user.id)
+    @response.answers = @answers
+    if @response.save
       flash[:notice] = l(:doodle_update_successfull)
       redirect_to :action => 'show', :id => @doodle
     else

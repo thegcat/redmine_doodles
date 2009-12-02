@@ -1,4 +1,5 @@
 table.list.doodle { border: none; }
+table.list.doodle td.answer { vertical-align: center; text-align: center; }
 tr.odd td.no { background-color: #ffc4c4; }
 tr.even td.no { background-color: #ffd4d4; }
 tr:hover td.no { background-color: #ff9494; }

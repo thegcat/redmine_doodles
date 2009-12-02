@@ -26,7 +26,7 @@
   <tbody>
     <% @responses.each do |response| %>
       <tr class="<%= cycle('odd', 'even') %>">
-        <td><%= avatar(response.author, :size => "24")%><%=h response.author.name %></td>
+        <td><%= avatar(response.author, :size => "24")%><span class="answeree"><%=h response.author.name %></span></td>
         <% column = 1 %>
       <% response.answers_with_css_classes.each do |answer,css| %>
         <td class="<%= css %>"><%= check_box_tag "answers[]", column-1, answer, :disabled => !(response.author == User.current), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
@@ -42,7 +42,7 @@
     </tr>
   </tbody>
 </table>
-<%= submit_tag l(:button_create) %>
+<%= submit_tag l(:button_save) %>
 <% end %>
 
 <% content_for :header_tags do %>

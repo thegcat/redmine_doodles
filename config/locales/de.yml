@@ -1,7 +1,7 @@
 # German strings go here for Rails i18n
 de:
-  label_doodle_new: "Neues düdle"
-  label_doodle_plural: "Düdles"
+  label_doodle_new: "Neues Doodle"
+  label_doodle_plural: "Doodles"
   label_add_options: "Optionen hinzufügen"
   field_expiry_date: "Expiration date"
   field_option: "Option"
