@@ -16,7 +16,9 @@ class DoodlesController < ApplicationController
   def show
     @author = @doodle.author
     @responses = @doodle.responses
-    @response = @responses.find_or_initialize_by_author_id(User.current.id)
+    @response = @responses.find_by_author_id(User.current.id)
+    # Give the current user an empty answer if she hasn't answered yet and the doodle is active
+    @response ||= DoodleAnswer.new :author => User.current if @doodle.active?
     @response.answers ||= Array.new(@doodle.options.size, false)
     @responses = @responses | [ @response ]
     # Code later needed for comments
@@ -39,6 +41,11 @@ class DoodlesController < ApplicationController
   end
   
   def update
+    unless @doodle.active?
+      flash[:error] = l(:doodle_inactive)
+      redirect_to :action => 'show', :id => @doodle
+      return
+    end
     @user = User.current
     params[:answers] ||= []
     @answers = Array.new(@doodle.options.size) { |index| params[:answers].include?(index.to_s) }

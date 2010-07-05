@@ -14,6 +14,10 @@ class Doodle < ActiveRecord::Base
     responses.empty? ? options.fill(0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
   end
   
+  def active?
+    expiry_date.nil? ? true : DateTime.now < expiry_date
+  end
+  
   private
   
   def sanitize_options
