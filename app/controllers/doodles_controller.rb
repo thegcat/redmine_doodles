@@ -1,9 +1,11 @@
 class DoodlesController < ApplicationController
   unloadable
   
-  before_filter :find_project, :except => [:show, :destroy, :update]
-  before_filter :find_doodle, :only => [:show, :destroy, :update]
+  before_filter :find_project, :except => [:show, :destroy, :update, :lock]
+  before_filter :find_doodle, :only => [:show, :destroy, :update, :lock]
   before_filter :authorize
+  
+  verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
   
   def index
     @doodles = @project.doodles.reverse
@@ -58,6 +60,11 @@ class DoodlesController < ApplicationController
       flash[:warning] = l(:doodle_update_unseccessfull)
       redirect_to :action => 'show', :id => @doodle
     end
+  end
+  
+  def lock
+    @doodle.update_attribute :locked, params[:locked]
+    redirect_to :action => 'show', :id => @doodle
   end
   
   private

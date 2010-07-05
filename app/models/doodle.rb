@@ -15,7 +15,7 @@ class Doodle < ActiveRecord::Base
   end
   
   def active?
-    expiry_date.nil? ? true : DateTime.now < expiry_date
+    !locked? && (expiry_date.nil? ? true : DateTime.now < expiry_date)
   end
   
   private

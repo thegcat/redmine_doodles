@@ -15,7 +15,8 @@ Redmine::Plugin.register :redmine_doodles do
   version 'trunk'
   
   project_module :doodles do
-    permission :view_doodles, { :doodles => [:index, :show, :new, :create, :update]}
+    permission :manage_doodles, {:doodles => [:new, :create, :update, :lock]}, :require => :loggedin
+    permission :view_doodles, {:doodles => [:index, :show]}
   end
   menu :project_menu, :doodles, { :controller => 'doodles', :action => 'index' }, :caption => :label_doodle_plural, :param => :project_id
 end
