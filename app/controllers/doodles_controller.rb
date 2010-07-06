@@ -18,13 +18,13 @@ class DoodlesController < ApplicationController
   def show
     @author = @doodle.author
     @responses = @doodle.responses
-    @response = @responses.find_by_author_id(User.current.id)
     # Give the current user an empty answer if she hasn't answered yet and the doodle is active
     if @doodle.active?
+      @response = @responses.find_by_author_id(User.current.id)
       @response ||= DoodleAnswers.new :author => User.current
       @response.answers ||= Array.new(@doodle.options.size, false)
+      @responses = @responses | [ @response ]
     end
-    @responses = @responses | [ @response ]
     # Code later needed for comments
     #@comments = @doodle.comments
     #@comments.reverse! if User.current.wants_comments_in_reverse_order?
