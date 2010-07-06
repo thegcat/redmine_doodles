@@ -6,4 +6,7 @@ en:
   field_expiry_date: "Expiration date"
   field_option: "Option"
   field_options: "Options"
-
+  permission_manage_doodles: "Manage doodles"
+  permission_create_doodles: "Create doodles"
+  permission_view_doodles: "View doodles"
+  permission_answer_doodles: "Answer doodles"
