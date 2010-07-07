@@ -1,10 +1,11 @@
 table.list.doodle { border: none; width: auto; }
 table.list.doodle td { vertical-align: middle; padding-right: 0.5em }
 table.list.doodle td.answer { text-align: center; }
-table.list.doodle img.gravatar { vertical-align: middle; margin-right: 0.5em}
+table.list.doodle img.gravatar { vertical-align: middle; margin-right: 0.5em }
 tr.odd td.no { background-color: #ffc4c4; }
 tr.even td.no { background-color: #ffd4d4; }
 tr:hover td.no { background-color: #ff9494; }
 tr.odd td.yes { background-color: #c4ffc4; }
 tr.even td.yes { background-color: #d4ffd4; }
 tr:hover td.yes { background-color: #94ff94; }
+div.doodle { overflow: auto; }

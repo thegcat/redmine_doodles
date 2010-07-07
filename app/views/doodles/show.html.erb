@@ -18,6 +18,7 @@
   <%= textilizable(@doodle.description) %>
   </div>
 </div>
+<div class="doodle">
 <% form_tag({:action => 'update', :id => @doodle}, {:method => :put}) do %>
 <table class="list doodle">
   <thead>
@@ -31,7 +32,7 @@
   <tbody>
     <% @responses.each do |response| %>
       <tr class="<%= cycle('odd', 'even') %>">
-        <td><%= avatar(response.author, :size => "24") %><span class="answeree"><%=h response.author.name %></span></td>
+        <td><%= avatar(response.author, :size => "24") %><div class="answeree"><%=h response.author.name %></div></td>
         <% column = 1 %>
       <% response.answers_with_css_classes.each do |answer,css| %>
         <td class="<%= css %>"><%= check_box_tag "answers[]", column-1, answer, :disabled => (!(@doodle.active?) || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
@@ -49,6 +50,7 @@
 </table>
 <%= submit_tag l(:button_save) %>
 <% end %>
+</div>
 
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'redmine_doodles.css', :plugin => "redmine_doodles" %>
