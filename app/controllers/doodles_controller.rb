@@ -18,6 +18,7 @@ class DoodlesController < ApplicationController
   def show
     @author = @doodle.author
     @responses = @doodle.responses
+    @winners = @doodle.winning_columns
     # Give the current user an empty answer if she hasn't answered yet and the doodle is active
     if @doodle.active?
       @response = @responses.find_by_author_id(User.current.id)

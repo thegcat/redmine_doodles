@@ -11,11 +11,15 @@ class Doodle < ActiveRecord::Base
   before_validation :sanitize_options
   
   def results
-    responses.empty? ? options.fill(0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
+    @results ||= responses.empty? ? options.fill(0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
   end
   
   def active?
     !locked? && (expiry_date.nil? ? true : DateTime.now < expiry_date)
+  end
+  
+  def winning_columns
+    @winning_columns ||= self.results.max == 0 ? [] : self.results.enum_with_index.collect {|v,i| i if v == self.results.max}.compact
   end
   
   private

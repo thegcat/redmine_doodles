@@ -24,8 +24,8 @@
   <thead>
     <tr>
       <td> </td>
-      <% @doodle.options.each do |option| %>
-        <th><%=h option %></th>
+      <% @doodle.options.each_with_index do |option,i| %>
+        <th<%= " class=\"winner\"" if @winners.include?(i) %>><%=h option %></th>
       <% end %>
     </tr>
   </thead>
@@ -34,7 +34,7 @@
       <tr class="<%= cycle('odd', 'even') %>">
         <td><%= avatar(response.author, :size => "24") %><div class="answeree"><%=h response.author.name %></div></td>
         <% column = 1 %>
-      <% response.answers_with_css_classes.each do |answer,css| %>
+      <% response.answers_with_css_classes(:winners => @winners).each do |answer,css| %>
         <td class="<%= css %>"><%= check_box_tag "answers[]", column-1, answer, :disabled => (!(@doodle.active?) || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
         <% column += 1 %>
       <% end %>
@@ -42,8 +42,8 @@
     <% end %>
     <tr class="<%= cycle('odd', 'even') %>">
       <td><%= l(:label_result_plural)%></td>
-      <% @doodle.results.each do |res| %>
-        <td><%= res %></td>
+      <% @doodle.results.each_with_index do |res,i| %>
+        <td<%= " class=\"winner\"" if @winners.include?(i) %>><%= res %></td>
       <% end %>
     </tr>
   </tbody>
