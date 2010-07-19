@@ -1,4 +1,6 @@
 class Doodle < ActiveRecord::Base
+  unloadable
+  
   serialize :options, Array
   
   belongs_to :project
@@ -11,7 +13,7 @@ class Doodle < ActiveRecord::Base
   before_validation :sanitize_options
   
   def results
-    @results ||= responses.empty? ? options.fill(0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
+    @results ||= responses.empty? ? Array.new(options.length, 0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
   end
   
   def active?

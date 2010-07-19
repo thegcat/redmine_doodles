@@ -21,11 +21,15 @@
 <div class="doodle">
 <% form_tag({:action => 'update', :id => @doodle}, {:method => :put}) do %>
 <table class="list doodle">
+  <col />
+  <% @doodle.options.each_index do |i| %>
+    <col <%= "class=\"yes\"" if @winners.include?(i) %>/>
+  <% end %>  
   <thead>
     <tr>
       <td> </td>
       <% @doodle.options.each_with_index do |option,i| %>
-        <th<%= " class=\"winner\"" if @winners.include?(i) %>><%=h option %></th>
+        <th<%= " class=\"yes\"" if @winners.include?(i) %>><%=h option %></th>
       <% end %>
     </tr>
   </thead>
@@ -33,10 +37,9 @@
     <% @responses.each do |response| %>
       <tr class="<%= cycle('odd', 'even') %>">
         <td><%= avatar(response.author, :size => "24") %><div class="answeree"><%=h response.author.name %></div></td>
-        <% column = 1 %>
-      <% response.answers_with_css_classes(:winners => @winners).each do |answer,css| %>
-        <td class="<%= css %>"><%= check_box_tag "answers[]", column-1, answer, :disabled => (!(@doodle.active?) || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
-        <% column += 1 %>
+      <% response.answers_with_css_classes.each_with_index do |answer_with_css,i| %>
+      <% answer, css = *answer_with_css %>
+        <td class="<%= css %>"><%= check_box_tag "answers[]", i, answer, :disabled => (!(@doodle.active?) || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
       <% end %>
       </tr>
     <% end %>
