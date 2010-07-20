@@ -20,7 +20,7 @@ class DoodlesController < ApplicationController
     @responses = @doodle.responses
     @winners = @doodle.winning_columns
     # Give the current user an empty answer if she hasn't answered yet and the doodle is active
-    if @doodle.active?
+    if @doodle.active? && User.current.allowed_to?(:answer_doodles, @project)
       @response = @responses.find_by_author_id(User.current.id)
       @response ||= DoodleAnswers.new :author => User.current
       @response.answers ||= Array.new(@doodle.options.size, false)
