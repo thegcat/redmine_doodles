@@ -1,13 +1,14 @@
-table.list.doodle { border: none; width: auto; }
-table.list.doodle td { vertical-align: middle; text-align: center; }
-table.list.doodle td.answeree { padding-right: 0.5em; border-left: none; text-align: left; }
-table.list.doodle td.gravatar { border-right: none; }
-tr.odd td.no { background-color: #ffc4c4; }
-tr.even td.no { background-color: #ffd4d4; }
-tr:hover td.no { background-color: #ff9494; }
-tr.odd td.yes, tr.odd td.winner { background-color: #c4ffc4; }
-tr.even td.yes, tr.even td.winner { background-color: #d4ffd4; }
-tr:hover td.yes, tr:hover td.winner { background-color: #94ff94; }
-tr.results td.winner {font-weight: bold; }
-/* col.winner { border: solid #94ff94;} */
+table.doodle { border: none; width: auto; }
+table.doodle td { vertical-align: middle; text-align: center; }
+table.doodle td.answeree { padding-right: 0.5em; border-left: none !important; text-align: left; }
+table.doodle td.gravatar { border-right: none !important; }
+table.doodle tr.odd td.no { background-color: #ffc4c4; }
+table.doodle tr.even td.no { background-color: #ffd4d4; }
+table.doodle tr:hover td.no { background-color: #ff9494; }
+table.doodle tr.odd td.yes, table.doodle tr.odd td.winner { background-color: #c4ffc4; }
+table.doodle tr.even td.yes, table.doodle tr.even td.winner { background-color: #d4ffd4; }
+table.doodle tr:hover td.yes, table.doodle tr:hover td.winner { background-color: #94ff94; }
+table.doodle tr.results { height: 32px; }
+table.doodle tr.results td.winner, table.doodle tr.results td.answeree { font-weight: bold; }
+table.doodle col.winner { border: 2px solid #34FF34; }
 div.doodle { overflow: auto; }
