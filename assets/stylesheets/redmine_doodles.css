@@ -1,4 +1,5 @@
 table.doodle { border: none; width: auto; }
+table.doodle th { white-space: normal; }
 table.doodle td { vertical-align: middle; text-align: center; }
 table.doodle td.answeree { padding-right: 0.5em; border-left: none !important; text-align: left; }
 table.doodle td.gravatar { border-right: none !important; }
