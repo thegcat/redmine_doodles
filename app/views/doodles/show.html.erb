@@ -55,8 +55,4 @@
 <%= submit_tag l(:button_save) if @doodle.active? && User.current.allowed_to?(:answer_doodles, @project) %>
 <% end %>
 
-<% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'redmine_doodles.css', :plugin => "redmine_doodles" %>
-<% end %>
-
 <% html_title "Doodle #{@doodle.id}: #{@doodle.title}" -%>

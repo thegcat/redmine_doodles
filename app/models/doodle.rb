@@ -8,6 +8,11 @@ class Doodle < ActiveRecord::Base
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
   has_many :responses, :class_name => 'DoodleAnswers', :dependent => :destroy, :order => "updated_on", :include => [:author]
   
+  acts_as_event :title => Proc.new {|o| "#{l(:label_doodle)} ##{o.id}: #{o.title}"},
+                :url => Proc.new {|o| {:controller => 'doodles', :action => 'show', :id => o.id}}
+  acts_as_activity_provider :find_options => {:include => [:project, :author]},
+                            :author_key => :author_id
+  
   validates_presence_of :title, :options
   
   before_validation :sanitize_options

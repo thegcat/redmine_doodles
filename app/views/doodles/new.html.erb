@@ -3,7 +3,3 @@
 <%= render :partial => 'doodles/form', :locals => { :f => f } %>
 <%= submit_tag l(:button_create) %>
 <% end if @project %>
-
-<% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'redmine_doodles.css', :plugin => "redmine_doodles" %>
-<% end %>

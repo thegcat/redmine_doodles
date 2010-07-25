@@ -1,5 +1,6 @@
 # English strings go here for Rails i18n
 en:
+  label_doodle: "Doodle"
   label_doodle_new: "New doodle"
   label_doodle_plural: "Doodles"
   label_add_options: "Add options"

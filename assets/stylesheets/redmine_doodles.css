@@ -1,3 +1,4 @@
+/* Doodles view: */
 table.doodle { border: none; width: auto; }
 table.doodle th { white-space: normal; }
 table.doodle td { vertical-align: middle; text-align: center; }
@@ -13,3 +14,6 @@ table.doodle tr.results { height: 32px; }
 table.doodle tr.results td.winner, table.doodle tr.results td.answeree { font-weight: bold; }
 table.doodle col.winner { border: 2px solid #34FF34; }
 div.doodle { overflow: auto; }
+
+/* Activity view: */
+dt.doodle { background-image: url(../images/date.png); }

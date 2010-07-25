@@ -8,6 +8,8 @@ Dispatcher.to_prepare do
   Project.send(:include, ::Plugin::Doodles::Project)
 end
 
+require_dependency 'view_hooks'
+
 Redmine::Plugin.register :redmine_doodles do
   name 'Redmine Doodles plugin'
   author 'Felix Schäfer'
@@ -20,5 +22,8 @@ Redmine::Plugin.register :redmine_doodles do
     permission :answer_doodles, {:doodles => [:update]}, :require => :loggedin
     permission :view_doodles, {:doodles => [:index, :show]}
   end
+  
   menu :project_menu, :doodles, { :controller => 'doodles', :action => 'index' }, :caption => :label_doodle_plural, :param => :project_id
+  
+  activity_provider :doodles, :default => false
 end
