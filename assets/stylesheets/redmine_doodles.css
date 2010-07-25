@@ -2,7 +2,7 @@ table.doodle { border: none; width: auto; }
 table.doodle th { white-space: normal; }
 table.doodle td { vertical-align: middle; text-align: center; }
 table.doodle td.answeree { padding-right: 0.5em; border-left-width: 0 !important; text-align: left; }
-table.doodle td.gravatar { border-right-width: 0 !important; border-left-width: 2px; }
+table.doodle td.gravatar { border-right-width: 0 !important; border-left-width: 2px !important; }
 table.doodle tr.odd td.no { background-color: #ffc4c4; }
 table.doodle tr.even td.no { background-color: #ffd4d4; }
 table.doodle tr:hover td.no { background-color: #ff9494; }
