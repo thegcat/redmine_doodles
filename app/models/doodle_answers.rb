@@ -5,8 +5,11 @@ class DoodleAnswers < ActiveRecord::Base
   
   belongs_to :doodle
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
+  has_many :edits, :class_name => 'DoodleAnswersEdits'
   
   validates_presence_of :answers
+  
+  after_save :create_edit
   
   def answers_with_css_classes
     [self.answers, self.css_classes].transpose
@@ -21,5 +24,11 @@ class DoodleAnswers < ActiveRecord::Base
       @css_classes << css
     end
     @css_classes
+  end
+  
+  private
+  
+  def create_edit
+    edits << DoodleAnswersEdits.new(:edited_on => updated_on, :author_id => author_id)
   end
 end

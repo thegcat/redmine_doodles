@@ -17,3 +17,4 @@ div.doodle { overflow: auto; }
 
 /* Activity view: */
 dt.doodle { background-image: url(../images/date.png); }
+dt.doodle-answers { background-image: url(../images/date_edit.png); }

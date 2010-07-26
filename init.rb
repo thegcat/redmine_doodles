@@ -25,5 +25,5 @@ Redmine::Plugin.register :redmine_doodles do
   
   menu :project_menu, :doodles, { :controller => 'doodles', :action => 'index' }, :caption => :label_doodle_plural, :param => :project_id
   
-  activity_provider :doodles, :default => false
+  activity_provider :doodles, :default => false, :class_name => ['Doodle', 'DoodleAnswersEdits']
 end
