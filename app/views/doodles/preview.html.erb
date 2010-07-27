@@ -1,0 +1,11 @@
+<% unless @doodle.description.empty? %>
+	<fieldset class="preview"><legend><%= l(:field_description) %></legend>
+		<%= textilizable @doodle.description %>
+	</fieldset>
+<% end %>
+
+<% unless @doodle.options.empty? %>
+  <fieldset class="preview"><legend><%= l(:label_doodle) %></legend>
+    <%= render :partial => 'doodle' %>
+  </fieldset>
+<% end %>

@@ -70,6 +70,17 @@ class DoodlesController < ApplicationController
     redirect_to :action => 'show', :id => @doodle
   end
   
+  def preview
+    if params[:doodle]
+      @doodle = Doodle.new(params[:doodle]).previewfy
+      unless @doodle.options.empty?
+        @winners = []
+        @responses = [DoodleAnswers.new(:author => User.current, :answers => Array.new(@doodle.options.size, false))]
+      end
+      render :layout => false
+    end
+  end
+  
   private
   
   def find_project

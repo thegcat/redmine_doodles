@@ -29,6 +29,12 @@ class Doodle < ActiveRecord::Base
     @winning_columns ||= self.results.max == 0 ? [] : self.results.enum_with_index.collect {|v,i| i if v == self.results.max}.compact
   end
   
+  def previewfy
+    self.locked = true
+    sanitize_options
+    self
+  end
+  
   private
   
   def sanitize_options
