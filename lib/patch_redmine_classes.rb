@@ -29,7 +29,7 @@ module Plugin
           recipients doodle.recipients
           subject "[#{doodle.project.name}] #{l(:label_doodle)}: #{doodle.title}"
           body :doodle => doodle,
-               :doodle_url => url_for(:controller => 'doodle', :action => 'show', :id => doodle)
+               :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle)
           render_multipart('doodle_added', body)
         end
         def doodle_answered(doodle_answer)
@@ -41,7 +41,7 @@ module Plugin
           cc(doodle_answer.doodle.watcher_recipients - recipients)
           subject "[#{doodle_answer.doodle.project.name}] #{l(:label_doodle)}: #{doodle_answer.doodle.title}"
           body :doodle_answer => doodle_answer,
-               :doodle_url => url_for(:controller => 'doodle', :action => 'show', :id => doodle_answer.doodle)
+               :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle_answer.doodle)
           render_multipart('doodle_answered', body)
         end
       end
