@@ -8,6 +8,7 @@ class Doodle < ActiveRecord::Base
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
   has_many :responses, :class_name => 'DoodleAnswers', :dependent => :destroy, :order => "updated_on", :include => [:author]
   
+  acts_as_watchable
   acts_as_event :title => Proc.new {|o| "#{l(:label_doodle)} ##{o.id}: #{o.title}"},
                 :url => Proc.new {|o| {:controller => 'doodles', :action => 'show', :id => o.id}}
   acts_as_activity_provider :find_options => {:include => [:project, :author]},
@@ -16,6 +17,8 @@ class Doodle < ActiveRecord::Base
   validates_presence_of :title, :options
   
   before_validation :sanitize_options
+  
+  after_create :add_author_as_watcher, :send_mails
   
   def results
     @results ||= responses.empty? ? Array.new(options.length, 0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
@@ -35,6 +38,10 @@ class Doodle < ActiveRecord::Base
     self
   end
   
+  def visible?(user=User.current)
+    !user.nil? && user.allowed_to?(:view_doodles, project)
+  end
+  
   private
   
   def sanitize_options
@@ -42,5 +49,13 @@ class Doodle < ActiveRecord::Base
       options.map! { |string| string.squeeze(" ").strip }
       options.delete_if { |string| string.empty? }
     end
+  end
+  
+  def send_mails
+    Mailer.deliver_doodle_added(self)
+  end
+  
+  def add_author_as_watcher
+    add_watcher(author)
   end
 end

@@ -7,6 +7,9 @@ class DoodlesController < ApplicationController
   
   verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
   
+  helper :watchers
+  include WatchersHelper
+  
   def index
     @doodles = @project.doodles.reverse
   end

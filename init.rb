@@ -3,9 +3,11 @@ require 'dispatcher'
 
 Dispatcher.to_prepare do
   require_dependency 'project'
+  require_dependency 'mailer'
   require 'patch_redmine_classes'
   
   Project.send(:include, ::Plugin::Doodles::Project)
+  Mailer.send(:include, ::Plugin::Doodles::Mailer)
 end
 
 require_dependency 'view_hooks'

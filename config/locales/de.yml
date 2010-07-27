@@ -11,3 +11,4 @@ de:
   permission_create_doodles: "Doodles erstellen"
   permission_view_doodles: "Doodles ansehen"
   permission_answer_doodles: "Doodles beantworten"
+  text_doodle_answered: "{{author}} hat das Doodle beantwortet."
