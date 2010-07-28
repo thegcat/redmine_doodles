@@ -21,6 +21,10 @@ class DoodleAnswersEdits < ActiveRecord::Base
     doodle_answers.doodle.project
   end
   
+  def created_on
+    edited_on
+  end
+  
   private
   
   def send_mails
