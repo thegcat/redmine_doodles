@@ -1,4 +1,4 @@
 <h1><%=h @doodle_answer.doodle.project.name %>: <%= link_to(h(@doodle_answer.doodle.title), @doodle_url) %></h1>
 <em><%=h @doodle_answer.doodle.author %></em>
 
-<%= l(:text_doodle_answered, :author => h(@doodle_answer.author)) %>
+<p><%= l(:text_doodle_answered, :author => h(@doodle_answer.author)) %></p>
