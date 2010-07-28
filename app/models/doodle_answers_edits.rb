@@ -15,7 +15,15 @@ class DoodleAnswersEdits < ActiveRecord::Base
                             :permission => :view_doodles,
                             :timestamp => "#{table_name}.edited_on"
                             
+  after_create :send_mails
+                            
   def project
     doodle_answers.doodle.project
+  end
+  
+  private
+  
+  def send_mails
+    Mailer.deliver_doodle_answered(self)
   end
 end

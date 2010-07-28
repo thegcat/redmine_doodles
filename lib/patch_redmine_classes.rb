@@ -32,10 +32,11 @@ module Plugin
                :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle)
           render_multipart('doodle_added', body)
         end
-        def doodle_answered(doodle_answer)
+        def doodle_answered(doodle_answer_edit)
+          doodle_answer = doodle_answer_edit.doodle_answers
           redmine_headers 'Project' => doodle_answer.doodle.project.identifier,
                           'Doodle-Id' => doodle_answer.doodle.id
-          message_id doodle_answer
+          message_id doodle_answer_edit
           references doodle_answer.doodle
           recipients doodle_answer.doodle.recipients
           cc(doodle_answer.doodle.watcher_recipients - recipients)

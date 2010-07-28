@@ -9,7 +9,7 @@ class DoodleAnswers < ActiveRecord::Base
   
   validates_presence_of :answers
   
-  after_save :create_edit, :send_mails
+  after_save :create_edit
   
   def answers_with_css_classes
     [self.answers, self.css_classes].transpose
@@ -30,9 +30,5 @@ class DoodleAnswers < ActiveRecord::Base
   
   def create_edit
     edits << DoodleAnswersEdits.new(:edited_on => updated_on, :author_id => author_id)
-  end
-  
-  def send_mails
-    Mailer.deliver_doodle_answered(self)
   end
 end
