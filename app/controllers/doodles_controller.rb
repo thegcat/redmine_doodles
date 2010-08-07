@@ -60,10 +60,10 @@ class DoodlesController < ApplicationController
     @response = @doodle.responses.find_or_initialize_by_author_id(@user.id)
     @response.answers = @answers
     if @response.save
-      flash[:notice] = l(:doodle_update_successfull)
+      flash[:notice] = l(:doodle_update_successful)
       redirect_to :action => 'show', :id => @doodle
     else
-      flash[:warning] = l(:doodle_update_unseccessfull)
+      flash[:warning] = l(:doodle_update_unsuccessful)
       redirect_to :action => 'show', :id => @doodle
     end
   end

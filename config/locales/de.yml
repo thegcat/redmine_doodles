@@ -1,5 +1,8 @@
 # German strings go here for Rails i18n
 de:
+  doodle_inactive: "Doodle ist inaktiv"
+  doodle_update_successful: "Doodle wurde aktualisiert"
+  doodle_update_unsuccessful: "Fehler beim Aktualisieren des Doodle"
   label_doodle: "Doodle"
   label_doodle_new: "Neues doodle"
   label_doodle_plural: "Doodles"
@@ -7,6 +10,7 @@ de:
   field_expiry_date: "Expiration date"
   field_option: "Option"
   field_options: "Optionen"
+  notice_successful_create: "Doodle erfolgreich angelegt"
   permission_manage_doodles: "Doodles verwalten"
   permission_create_doodles: "Doodles erstellen"
   permission_view_doodles: "Doodles ansehen"
