@@ -1,11 +1,12 @@
 class DoodlesController < ApplicationController
   unloadable
   
-  before_filter :find_project, :except => [:show, :destroy, :update, :lock]
-  before_filter :find_doodle, :only => [:show, :destroy, :update, :lock]
+  before_filter :find_project, :except => [:show, :destroy, :update, :lock, :comment]
+  before_filter :find_doodle, :only => [:show, :destroy, :update, :lock, :comment]
+  before_filter :doodle_active?, :only => [:update, :comment]
   before_filter :authorize
   
-  verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
+  verify :method => :post, :only => [:lock, :comment], :redirect_to => { :action => :show }
   
   helper :watchers
   include WatchersHelper
@@ -29,9 +30,8 @@ class DoodlesController < ApplicationController
       @response.answers ||= Array.new(@doodle.options.size, false)
       @responses = @responses | [ @response ]
     end
-    # Code later needed for comments
-    #@comments = @doodle.comments
-    #@comments.reverse! if User.current.wants_comments_in_reverse_order?
+    @comments = @doodle.comments
+    @comments.reverse! if User.current.wants_comments_in_reverse_order?
   end
 
   def destroy
@@ -49,15 +49,9 @@ class DoodlesController < ApplicationController
   end
   
   def update
-    unless @doodle.active?
-      flash[:error] = l(:doodle_inactive)
-      redirect_to :action => 'show', :id => @doodle
-      return
-    end
-    @user = User.current
     params[:answers] ||= []
     @answers = Array.new(@doodle.options.size) { |index| params[:answers].include?(index.to_s) }
-    @response = @doodle.responses.find_or_initialize_by_author_id(@user.id)
+    @response = @doodle.responses.find_or_initialize_by_author_id(User.current.id)
     @response.answers = @answers
     if @response.save
       flash[:notice] = l(:doodle_update_successfull)
@@ -65,6 +59,19 @@ class DoodlesController < ApplicationController
     else
       flash[:warning] = l(:doodle_update_unseccessfull)
       redirect_to :action => 'show', :id => @doodle
+    end
+  end
+  
+  def comment
+    @comment = Comment.new(params[:comment])
+    @comment.author = User.current
+    if @doodle.comments << @comment
+      flash[:notice] = l(:label_comment_added)
+      redirect_to :action => 'show', :id => @doodle
+    # TODO: handle failed comments
+    #else
+    #  show
+    #  render :action => 'show'
     end
   end
   
@@ -95,5 +102,13 @@ class DoodlesController < ApplicationController
     @project = @doodle.project
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+  
+  def doodle_active?
+    unless @doodle.active?
+      flash[:error] = l(:doodle_inactive)
+      redirect_to :action => 'show', :id => @doodle
+      return
+    end
   end
 end

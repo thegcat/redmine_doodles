@@ -21,7 +21,7 @@ Redmine::Plugin.register :redmine_doodles do
   project_module :doodles do
     permission :manage_doodles, {:doodles => [:lock]}, :require => :member
     permission :create_doodles, {:doodles => [:new, :create, :preview]}, :require => :member
-    permission :answer_doodles, {:doodles => [:update]}, :require => :loggedin
+    permission :answer_doodles, {:doodles => [:update, :comment]}, :require => :loggedin
     permission :view_doodles, {:doodles => [:index, :show]}
   end
   

@@ -10,5 +10,6 @@ ActionController::Routing::Routes.draw do |map|
     doodles_routes.connect "doodles/:id", :conditions => { :method => :delete }, :action => 'destroy', :id => /\d+/
     doodles_routes.connect "doodles/:id/edit", :conditions => { :method => :get }, :action => 'edit', :id => /\d+/
     doodles_routes.connect "doodles/:id/lock", :conditions => { :method => :post }, :action => 'lock', :id => /\d+/
+    doodles_routes.connect "doodles/:id/comment", :conditions => { :method => :post }, :action => 'comment', :id => /\d+/
   end
 end

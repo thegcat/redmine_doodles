@@ -22,7 +22,7 @@
       </tr>
     <% end %>
     <tr class="<%= cycle('odd', 'even') %> results">
-      <td class="gravatar"> </td> <td class="answeree"><%= l(:label_result_plural)%></td>
+      <td class="gravatar"><%= image_tag 'sum.png', :plugin => 'redmine_doodles', :class => 'gravatar' %></td> <td class="answeree"><%= l(:label_result_plural)%></td>
       <% @doodle.results.each_with_index do |res,i| %>
         <td<%= " class=\"winner\"" if @winners.include?(i) %>><%= res %></td>
       <% end %>
