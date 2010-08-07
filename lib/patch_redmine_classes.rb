@@ -27,6 +27,7 @@ module Plugin
                           'Doodle-Id' => doodle.id
           message_id doodle
           recipients doodle.recipients
+          cc(doodle.watcher_recipients - recipients)
           subject "[#{doodle.project.name}] #{l(:label_doodle)}: #{doodle.title}"
           body :doodle => doodle,
                :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle)

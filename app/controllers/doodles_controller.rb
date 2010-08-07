@@ -40,6 +40,7 @@ class DoodlesController < ApplicationController
   def create
     @doodle = Doodle.new(:project => @project, :author => User.current)
     @doodle.attributes = params[:doodle]
+    @doodle.watcher_user_ids = params[:doodle]['watcher_user_ids']
     if @doodle.save
       flash[:notice] = l(:notice_successful_create)
       redirect_to :action => 'show', :id => @doodle
