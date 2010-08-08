@@ -43,6 +43,10 @@ class Doodle < ActiveRecord::Base
     !user.nil? && user.allowed_to?(:view_doodles, project)
   end
   
+  def users_missing_answer
+    @users_missing_answer ||= should_answer - responses.collect(&:author)
+  end
+  
   private
   
   def sanitize_options

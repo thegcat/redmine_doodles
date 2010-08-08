@@ -93,7 +93,7 @@ class DoodlesController < ApplicationController
   end
   
   def find_doodle
-    @doodle = Doodle.find(params[:id], :include => [:project, :author, :responses])
+    @doodle = Doodle.find(params[:id], :include => [:project, :author, :responses, :should_answer])
     @project = @doodle.project
   rescue ActiveRecord::RecordNotFound
     render_404

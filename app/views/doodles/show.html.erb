@@ -13,6 +13,9 @@
     <%= authoring @doodle.created_on, @doodle.author %>
   </p>
   <p><strong><%=l(:field_expiry_date)%></strong>: <%= format_date(@doodle.expiry_date) %></p>
+  <% unless @doodle.should_answer.empty? -%>
+    <p><strong><%=l(:field_missing_answers)%></strong>: <%= @doodle.users_missing_answer.size %> <%= "(#{@doodle.users_missing_answer.collect(&:name).join(", ")})" if User.current == @doodle.author && !@doodle.users_missing_answer.empty? %></p>
+  <% end -%>
   <hr />
   <p><strong><%=l(:field_description)%></strong></p>
   <div class="wiki">
