@@ -1,3 +1,15 @@
+/* Doodle details */
+
+div.doodle.details { background: #ffffdd; padding: 6px; margin: 1em 0px; border: 1px solid #d7d7d7; }
+div.doodle.details div.subject div div { padding-left: 16px; }
+div.doodle.details div.subject p {margin: 0; margin-bottom: 0.1em; font-size: 90%; color: #999;}
+div.doodle.details div.subject>div>p { margin-top: 0.5em; }
+div.doodle.details div.subject h3 {margin: 0; margin-bottom: 0.1em;}
+div.doodle.details img.gravatar { float: right; margin: 0 0 0 1em; padding: 5px; }
+div.doodle.details table img.gravatar { height: 14px; width: 14px; padding: 2px; float: left; margin: 0 0.5em 0 0; }
+
+
+
 /* Doodles view: */
 table.doodle { border: none; width: auto; }
 table.doodle th { white-space: normal; }

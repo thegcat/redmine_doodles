@@ -4,7 +4,7 @@
 	</fieldset>
 <% end %>
 
-<% unless @doodle.options.empty? %>
+<% unless @doodle.options.nil? || @doodle.options.empty? %>
   <fieldset class="preview"><legend><%= l(:label_doodle) %></legend>
     <%= render :partial => 'doodle' %>
   </fieldset>
