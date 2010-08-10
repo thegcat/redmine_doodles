@@ -1,12 +1,34 @@
 <div class="contextual">
 <%= watcher_tag(@doodle, User.current) %>
-<%= link_to_if_authorized(l(:button_lock), {:action => 'lock', :id => @doodle.id, :locked => 1}, :method => :post, :class => 'icon icon-lock') if !@doodle.locked? %>
-<%= link_to_if_authorized(l(:button_unlock), {:action => 'lock', :id => @doodle.id, :locked => 0}, :method => :post, :class => 'icon icon-unlock') if @doodle.locked? %>
+<%= link_to_if_authorized(l(:button_lock), {:action => 'lock', :id => @doodle, :locked => 1}, :method => :post, :class => 'icon icon-lock') if !@doodle.locked? %>
+<%= link_to_if_authorized(l(:button_unlock), {:action => 'lock', :id => @doodle, :locked => 0}, :method => :post, :class => 'icon icon-unlock') if @doodle.locked? %>
+<%= link_to_if_authorized l(:button_edit), 
+                          {:action => 'edit', :id => @doodle},
+                          :class => 'icon icon-edit',
+                          :accesskey => accesskey(:edit),
+                          :onclick => 'Element.show("edit-doodle"); return false;' %>
 </div>
 
 <h2>Doodle #<%= @doodle.id %></h2>
 
-<div class="issue details">
+<% if authorize_for('doodles', 'edit') %>
+<div id="edit-doodle" style="display:none;">
+  <% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'update', :id => @doodle}, :html => { :id => 'doodle-form', :method => :put } do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag l(:button_save) %>
+  <%= link_to_remote l(:label_preview), 
+                     { :url => { :controller => 'doodles', :action => 'preview', :project_id => @project },
+                       :method => 'post',
+                       :update => 'preview',
+                       :with => "Form.serialize('doodle-form')"
+                     }, :accesskey => accesskey(:preview) %>
+  <% end %>
+  <div id="preview" class="doodle"></div>
+</div>
+<% end %>
+
+
+<div class="doodle details">
   <%= avatar(@author, :size => "64") %>
   <h3><%=h @doodle.title %></h3>
   <p class="author">
@@ -23,7 +45,7 @@
   </div>
 </div>
 <div class="doodle">
-<% form_tag({:action => 'update', :id => @doodle}, {:method => :put}) do %>
+<% form_tag({:action => 'answer', :id => @doodle}, {:method => :post}) do %>
 <%= render :partial => 'doodle' %>
 </div>
 <%= submit_tag l(:button_save) if @doodle.active? && User.current.allowed_to?(:answer_doodles, @project) %>

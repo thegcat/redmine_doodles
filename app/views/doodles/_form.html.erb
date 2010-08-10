@@ -4,16 +4,17 @@
   <p><%= f.text_field :title, :required => true, :size => 60 %></p>
   <p><%= f.text_field :expiry_date, :size => 10 %><%= calendar_for('doodle_expiry_date') %></p>
   <p><%= f.text_area :description, :cols => 60, :rows => 3 %>
+  <% if @doodle.new_record? %>
   <div id="options">
       <%= render :partial => 'option' %>
   </div>
   <p><%= link_to_function l(:label_add_options) do |page|
       page.insert_html :bottom, :options, :partial => 'option'
     end %></p>
-    
   <p><label><%= l(:label_doodle_watchers) %></label>
   <% @project.users.sort.each do |user| -%>
   <label class="floating"><%= check_box_tag 'doodle[watcher_user_ids][]', user.id %> <%=h user %></label>
   <% end -%>
   </p>
+  <% end %>
 </div>

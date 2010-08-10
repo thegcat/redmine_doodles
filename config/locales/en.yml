@@ -1,5 +1,8 @@
 # English strings go here for Rails i18n
 en:
+  doodle_inactive: "Doodle is inactive"
+  doodle_update_successful: "Doodle successfully updated"
+  doodle_update_unsuccessful: "Failure updating doodle"
   label_doodle: "Doodle"
   label_doodle_new: "New doodle"
   label_doodle_plural: "Doodles"
@@ -8,6 +11,7 @@ en:
   field_option: "Option"
   field_options: "Options"
   field_missing_answers: "Pending answers"
+  notice_successful_create: "Doodle successfully created"
   permission_manage_doodles: "Manage doodles"
   permission_create_doodles: "Create doodles"
   permission_view_doodles: "View doodles"

@@ -1,11 +1,11 @@
 class DoodlesController < ApplicationController
   unloadable
   
-  before_filter :find_project, :except => [:show, :destroy, :update, :lock]
-  before_filter :find_doodle, :only => [:show, :destroy, :update, :lock]
+  before_filter :find_project, :except => [:show, :destroy, :update, :lock, :edit, :answer]
+  before_filter :find_doodle, :only => [:show, :destroy, :update, :lock, :edit, :answer]
   before_filter :authorize
   
-  verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
+  verify :method => :post, :only => [:lock, :answer], :redirect_to => { :action => :show }
   
   helper :watchers
   include WatchersHelper
@@ -15,7 +15,9 @@ class DoodlesController < ApplicationController
   end
 
   def new
-    @doodle = Doodle.new(:project => @project)
+  end
+  
+  def edit
   end
 
   def show
@@ -38,7 +40,6 @@ class DoodlesController < ApplicationController
   end
   
   def create
-    @doodle = Doodle.new(:project => @project, :author => User.current)
     @doodle.attributes = params[:doodle]
     @doodle.watcher_user_ids = params[:doodle]['watcher_user_ids']
     @doodle.should_answer_ids = params[:doodle]['watcher_user_ids']
@@ -51,6 +52,17 @@ class DoodlesController < ApplicationController
   end
   
   def update
+    @doodle.attributes = params[:doodle]
+    if @doodle.save
+      flash[:notice] = l(:doodle_update_successful)
+      redirect_to :action => 'show', :id => @doodle
+    else
+      flash[:warning] = l(:doodle_update_unsuccessful)
+      redirect_to :action => 'edit', :id => @doodle
+    end
+  end
+  
+  def answer
     unless @doodle.active?
       flash[:error] = l(:doodle_inactive)
       redirect_to :action => 'show', :id => @doodle
@@ -62,10 +74,10 @@ class DoodlesController < ApplicationController
     @response = @doodle.responses.find_or_initialize_by_author_id(@user.id)
     @response.answers = @answers
     if @response.save
-      flash[:notice] = l(:doodle_update_successfull)
+      flash[:notice] = l(:doodle_update_successful)
       redirect_to :action => 'show', :id => @doodle
     else
-      flash[:warning] = l(:doodle_update_unseccessfull)
+      flash[:warning] = l(:doodle_update_unsuccessful)
       redirect_to :action => 'show', :id => @doodle
     end
   end
@@ -78,7 +90,7 @@ class DoodlesController < ApplicationController
   def preview
     if params[:doodle]
       @doodle = Doodle.new(params[:doodle]).previewfy
-      unless @doodle.options.empty?
+      unless @doodle.options.nil? || @doodle.options.empty?
         @winners = []
         @responses = [DoodleAnswers.new(:author => User.current, :answers => Array.new(@doodle.options.size, false))]
       end
@@ -90,6 +102,7 @@ class DoodlesController < ApplicationController
   
   def find_project
     @project = Project.find(params[:project_id])
+    @doodle = Doodle.new(:project => @project, :author => User.current)
   end
   
   def find_doodle
