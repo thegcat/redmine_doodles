@@ -26,8 +26,8 @@ module Plugin
           redmine_headers 'Project' => doodle.project.identifier,
                           'Doodle-Id' => doodle.id
           message_id doodle
-          recipients (doodle.recipients - doodle.should_answer)
-          cc ((doodle.watcher_recipients - recipients) - doodle.should_answer)
+          recipients (doodle.recipients - doodle.should_answer_recipients)
+          cc ((doodle.watcher_recipients - recipients) - doodle.should_answer_recipients)
           subject "[#{doodle.project.name}] #{l(:label_doodle)}: #{doodle.title}"
           body :doodle => doodle,
                :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle)
@@ -38,7 +38,7 @@ module Plugin
           redmine_headers 'Project' => doodle.project.identifier,
                           'Doodle-Id' => doodle.id
           message_id doodle
-          recipients doodle.should_answer
+          recipients doodle.should_answer_recipients
           subject "[#{doodle.project.name}] #{l(:label_doodle)}: #{doodle.title}"
           body :doodle => doodle,
                :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle)

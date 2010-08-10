@@ -47,6 +47,10 @@ class Doodle < ActiveRecord::Base
     @users_missing_answer ||= should_answer - responses.collect(&:author)
   end
   
+  def should_answer_recipients
+    @should_answer_recipients ||= should_answer.collect(&:mail)
+  end
+  
   private
   
   def sanitize_options
