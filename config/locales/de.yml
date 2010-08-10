@@ -7,6 +7,7 @@ de:
   label_doodle_new: "Neues doodle"
   label_doodle_plural: "Doodles"
   label_add_options: "Optionen hinzufügen"
+  label_doodle_watchers: "Beobachter (von diesen Benutzern wird auch eine Antwort erwartet)"
   field_expiry_date: "Expiration date"
   field_option: "Option"
   field_options: "Optionen"
@@ -17,3 +18,4 @@ de:
   permission_view_doodles: "Doodles ansehen"
   permission_answer_doodles: "Doodles beantworten"
   text_doodle_answered: "{{author}} hat das Doodle beantwortet."
+  text_doodle_with_requested_answer: "{{author}} bittet dich, dieses Doodle zu beantworten."

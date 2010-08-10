@@ -58,6 +58,7 @@ class Doodle < ActiveRecord::Base
   
   def send_mails
     Mailer.deliver_doodle_added(self)
+    Mailer.deliver_doodle_added_with_answer_request(self)
   end
   
   def add_author_as_watcher

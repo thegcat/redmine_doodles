@@ -26,13 +26,25 @@ module Plugin
           redmine_headers 'Project' => doodle.project.identifier,
                           'Doodle-Id' => doodle.id
           message_id doodle
-          recipients doodle.recipients
-          cc(doodle.watcher_recipients - recipients)
+          recipients (doodle.recipients - doodle.should_answer)
+          cc ((doodle.watcher_recipients - recipients) - doodle.should_answer)
           subject "[#{doodle.project.name}] #{l(:label_doodle)}: #{doodle.title}"
           body :doodle => doodle,
                :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle)
           render_multipart('doodle_added', body)
         end
+        
+        def doodle_added_with_answer_request(doodle)
+          redmine_headers 'Project' => doodle.project.identifier,
+                          'Doodle-Id' => doodle.id
+          message_id doodle
+          recipients doodle.should_answer
+          subject "[#{doodle.project.name}] #{l(:label_doodle)}: #{doodle.title}"
+          body :doodle => doodle,
+               :doodle_url => url_for(:controller => 'doodles', :action => 'show', :id => doodle)
+          render_multipart('doodle_added_answer_requested', body)
+        end
+        
         def doodle_answered(doodle_answer_edit)
           doodle_answer = doodle_answer_edit.doodle_answers
           redmine_headers 'Project' => doodle_answer.doodle.project.identifier,
