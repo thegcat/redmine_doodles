@@ -11,9 +11,9 @@
   <p><%= link_to_function l(:label_add_options) do |page|
       page.insert_html :bottom, :options, :partial => 'option'
     end %></p>
-  <p><label><%= l(:label_doodle_watchers) %></label>
+  <p><label><%= l(:label_doodle_should_answer) %></label>
   <% @project.users.sort.each do |user| -%>
-  <label class="floating"><%= check_box_tag 'doodle[watcher_user_ids][]', user.id %> <%=h user %></label>
+  <label class="floating"><%= check_box_tag 'doodle[should_answer_ids][]', user.id %> <%=h user %></label>
   <% end -%>
   </p>
   <% end %>

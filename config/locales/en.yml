@@ -8,6 +8,7 @@ en:
   label_doodle_plural: "Doodles"
   label_add_options: "Add options"
   label_doodle_watchers: "Watchers (those users will also be requested to answer the doodle)"
+  label_doodle_should_answer: "Users that should answer this doodle"
   field_expiry_date: "Expiration date"
   field_option: "Option"
   field_options: "Options"

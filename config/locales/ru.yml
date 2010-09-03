@@ -7,6 +7,7 @@ ru:
   label_doodle_plural: "Опросы"
   label_add_options: "Добавить варианты"
   label_doodle_watchers: "Наблюдатели (эти пользователи также получат уведомление о необходимости участия в опросе)"
+  label_doodle_should_answer: "Users that should answer this doodle"
   field_expiry_date: "Активен до"
   field_option: "Вариант"
   field_options: "Варианты"
