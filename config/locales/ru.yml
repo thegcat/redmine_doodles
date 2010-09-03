@@ -1,3 +1,4 @@
+# Russian strings go here for Rails i18n
 ru:
   doodle_inactive: "Опрос неактивен"
   doodle_update_successful: "Опрос успешно обновлен"

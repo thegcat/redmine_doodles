@@ -13,7 +13,6 @@ de:
   field_option: "Option"
   field_options: "Optionen"
   field_missing_answers: "Ausstehende Antworten"
-  notice_successful_create: "Doodle erfolgreich angelegt"
   permission_manage_doodles: "Doodles verwalten"
   permission_create_doodles: "Doodles erstellen"
   permission_view_doodles: "Doodles ansehen"
