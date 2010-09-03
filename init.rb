@@ -16,7 +16,7 @@ Redmine::Plugin.register :redmine_doodles do
   name 'Redmine Doodles plugin'
   author 'Felix Schäfer'
   description 'Per project doodles'
-  version 'trunk'
+  version '0.5'
   
   project_module :doodles do
     permission :manage_doodles, {:doodles => [:lock, :edit, :update]}, :require => :member
