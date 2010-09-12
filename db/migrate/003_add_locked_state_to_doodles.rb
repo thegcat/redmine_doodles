@@ -1,6 +1,6 @@
 class AddLockedStateToDoodles < ActiveRecord::Migration
   def self.up
-    add_column :doodles, :locked, :boolean, :default => 0
+    add_column :doodles, :locked, :boolean, :default => false
   end
 
   def self.down
