@@ -37,6 +37,8 @@ class DoodlesController < ApplicationController
   end
 
   def destroy
+    @doodle.destroy
+    redirect_to :action => 'index', :project_id => @project
   end
   
   def create

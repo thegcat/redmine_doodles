@@ -7,7 +7,7 @@ class Doodle < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
   has_and_belongs_to_many :should_answer, :class_name => 'User', :join_table => "#{table_name_prefix}users_should_answer_doodles#{table_name_suffix}"
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
-  has_many :responses, :class_name => 'DoodleAnswers', :dependent => :destroy, :order => "updated_on", :include => [:author]
+  has_many :responses, :class_name => 'DoodleAnswers', :dependent => :delete_all, :order => "updated_on", :include => [:author]
   
   acts_as_watchable
   acts_as_event :title => Proc.new {|o| "#{l(:label_doodle)} ##{o.id}: #{o.title}"},

@@ -1,5 +1,7 @@
 class DoodleAnswersController < ApplicationController
   unloadable
+  
+  menu_item :doodles
 
   before_filter :find_doodle, :only => [:create]
   before_filter :find_doodle_answer, :only => [:update]
