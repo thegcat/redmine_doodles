@@ -44,11 +44,11 @@
   <%= textilizable(@doodle.description) %>
   </div>
 </div>
-<div class="doodle">
-<% form_tag({:action => 'answer', :id => @doodle}, {:method => :post}) do %>
+
+<% unless @response %>
 <%= render :partial => 'doodle' %>
-</div>
-<%= submit_tag l(:button_save) if @doodle.active? && User.current.allowed_to?(:answer_doodles, @project) %>
+<% else %>
+<%= render :partial => @response.new_record? ? 'doodle_create_answer' : 'doodle_update_answer' %>
 <% end %>
 
 <% html_title "Doodle #{@doodle.id}: #{@doodle.title}" -%>

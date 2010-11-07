@@ -1,11 +1,11 @@
 class DoodlesController < ApplicationController
   unloadable
   
-  before_filter :find_project, :except => [:show, :destroy, :update, :lock, :edit, :answer]
-  before_filter :find_doodle, :only => [:show, :destroy, :update, :lock, :edit, :answer]
+  before_filter :find_project, :except => [:show, :destroy, :update, :lock, :edit]
+  before_filter :find_doodle, :only => [:show, :destroy, :update, :lock, :edit]
   before_filter :authorize
   
-  verify :method => :post, :only => [:lock, :answer], :redirect_to => { :action => :show }
+  verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
   
   helper :watchers
   include WatchersHelper
@@ -59,26 +59,6 @@ class DoodlesController < ApplicationController
     else
       flash[:warning] = l(:doodle_update_unsuccessful)
       redirect_to :action => 'edit', :id => @doodle
-    end
-  end
-  
-  def answer
-    unless @doodle.active?
-      flash[:error] = l(:doodle_inactive)
-      redirect_to :action => 'show', :id => @doodle
-      return
-    end
-    @user = User.current
-    params[:answers] ||= []
-    @answers = Array.new(@doodle.options.size) { |index| params[:answers].include?(index.to_s) }
-    @response = @doodle.responses.find_or_initialize_by_author_id(@user.id)
-    @response.answers = @answers
-    if @response.save
-      flash[:notice] = l(:doodle_update_successful)
-      redirect_to :action => 'show', :id => @doodle
-    else
-      flash[:warning] = l(:doodle_update_unsuccessful)
-      redirect_to :action => 'show', :id => @doodle
     end
   end
   

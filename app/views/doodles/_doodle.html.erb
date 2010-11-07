@@ -1,3 +1,4 @@
+<div class="doodle">
 <table class="list doodle">
   <col span="2" />
   <% @doodle.options.each_index do |i| %>
@@ -17,7 +18,7 @@
         <td class="gravatar"><%= avatar(response.author, :size => "24") %></td><td class="answeree"><%=h response.author.name %></td>
       <% response.answers_with_css_classes.each_with_index do |answer_with_css,i| %>
       <% answer, css = *answer_with_css %>
-        <td class="<%= css %>"><%= check_box_tag "answers[]", i, answer, :disabled => (!(@doodle.active?) || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
+        <td class="<%= css %>"><%= check_box_tag "answers[]", i, answer, :disabled => (!@doodle.active? || !@response || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
       <% end %>
       </tr>
     <% end %>
@@ -29,3 +30,4 @@
     </tr>
   </tbody>
 </table>
+</div>
