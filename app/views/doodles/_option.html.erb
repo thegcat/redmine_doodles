@@ -1,5 +1,0 @@
-<% 5.times do %>
-  <div class="option">
-    <p><%= label "doodle_options_", nil, l(:field_option) %> <%= text_field_tag "doodle[options][]", nil, :size => 60 %> <%= link_to_function l(:button_delete), "$(this).up('.option').remove()" %></p>
-  </div>
-<% end %>

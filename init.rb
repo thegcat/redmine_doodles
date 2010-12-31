@@ -4,13 +4,13 @@ require 'dispatcher'
 Dispatcher.to_prepare do
   require_dependency 'project'
   require_dependency 'mailer'
-  require 'patch_redmine_classes'
+  require 'redmine_doodles/patch_redmine_classes'
   
   Project.send(:include, ::Plugin::Doodles::Project)
   Mailer.send(:include, ::Plugin::Doodles::Mailer)
 end
 
-require_dependency 'view_hooks'
+require_dependency 'redmine_doodles/view_hooks'
 
 Redmine::Plugin.register :redmine_doodles do
   name 'Redmine Doodles plugin'

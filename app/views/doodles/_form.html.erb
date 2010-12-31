@@ -6,15 +6,10 @@
   <p><%= f.text_area :description, :cols => 60, :rows => 3 %>
   <% if @doodle.new_record? %>
   <div id="options">
-    <% @doodle.options.each do |option| %>
-      <div class="option">
-      <p><%= label "doodle_options_", nil, l(:field_option) %> <%= text_field_tag "doodle[options][]", option, :size => 60 %> <%= link_to_function l(:button_delete), "$(this).up('.option').remove()" %></p>
-      </div>
-    <% end unless @doodle.options.nil? %>
-    <%= render :partial => 'option' %>
+    <%= render :partial => 'options', :locals => {:options => @doodle.options} %>
   </div>
   <p><%= link_to_function l(:label_add_options) do |page|
-      page.insert_html :bottom, :options, :partial => 'option'
+      page.insert_html :bottom, :options, :partial => 'options', :locals => {:options => nil}
     end %></p>
   <p><label><%= l(:label_doodle_should_answer) %></label>
   <% @project.users.sort.each do |user| -%>
