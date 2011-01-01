@@ -1,0 +1,33 @@
+h1. Redmine Doodles
+
+A doodle module for redmine, a doodle in this case being a collection of simple yes-no questions.
+
+h2. Installation
+
+Generic Redmine plugin installation instructions can be found in the "Redmine wiki":http://www.redmine.org/wiki/redmine/Plugins#Installing-a-plugin.
+
+For the impatient: go to your redmine directory, run the following commands and restart redmine:
+
+<pre>git clone https://git.fachschaften.org/redmine_doodles
+rake db:migrate_plugins RAILS_ENV=production</pre>
+
+Remember to go to the permissions page and give permissions to create and answer doodles as needed!
+
+h2. Translations
+
+# @en@, @de@ by myself
+# @ru@ by Eugeniy Belyaev
+# @ko@ by 박우진
+# @fr@ by "JB Barth":https://github.com/jbbarth
+
+h2. Help
+
+You can get help for this plugin in the "Redmine forums":http://www.redmine.org/boards/2 which I currently visit regularly or in the dedicated "Redmine Doodles thread":http://www.redmine.org/boards/3/topics/9957.
+
+h2. Features
+
+TODO
+
+h2. License
+
+TODO
