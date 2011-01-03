@@ -15,10 +15,11 @@ Remember to go to the permissions page and give permissions to create and answer
 
 h2. Translations
 
-# @en@, @de@ by myself
-# @ru@ by Eugeniy Belyaev
-# @ko@ by 박우진
-# @fr@ by "JB Barth":https://github.com/jbbarth
+* @en@, @de@ by myself
+* @ru@ by Eugeniy Belyaev
+* @ko@ by 박우진
+* @fr@ by "JB Barth":https://github.com/jbbarth
+* @es@ by Jan Wedekind (http://iris.cat/)
 
 h2. Help
 
