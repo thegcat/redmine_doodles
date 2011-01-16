@@ -10,7 +10,7 @@
 <%= link_to_if_authorized(l(:button_delete), {:action => 'destroy'}, :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del') %>
 </div>
 
-<h2>Doodle #<%= @doodle.id %></h2>
+<h2><%= l(:label_doodle)%> #<%= @doodle.id %></h2>
 
 <% if authorize_for('doodles', 'edit') %>
 <div id="edit-doodle" style="display:none;">

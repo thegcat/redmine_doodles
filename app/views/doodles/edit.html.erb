@@ -1,4 +1,4 @@
-<h2><%= l(:label_doodle) %></h2>
+<h2><%= l(:label_doodle) %> #<%= @doodle.id %></h2>
 <% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'update', :id => @doodle}, :html => { :id => 'doodle-form', :method => :put } do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>

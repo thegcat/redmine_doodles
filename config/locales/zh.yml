@@ -1,0 +1,27 @@
+# Chinese strings go here for Rails i18n
+zh:
+  doodle_inactive: 投票未激活
+  doodle_update_successful: 投票已更新
+  doodle_update_unsuccessful: 投票更新失败
+  doodle_answer_create_successful: "Doodle successfully answered"
+  doodle_answer_create_unsuccessful: "Failure answering doodle"
+  doodle_answer_update_successful: "Answer sucessfully updated"
+  doodle_answer_update_unsuccessful: "Failure updating answer"
+  label_doodle: 投票
+  label_doodle_new: 创建投票
+  label_doodle_plural: 投票  
+  label_add_options: 增加选项
+  label_doodle_watchers: 关注者(这些人也会被邀请参加投票)
+  label_doodle_should_answer: 参与投票人员
+  field_expiry_date: 失效日期
+  field_option: 选项
+  field_options: 选项
+  field_missing_answers: 未响应的应答
+  permission_manage_doodles: 管理投票
+  permission_delete_doodles: "Delete doodles"
+  permission_create_doodles: 创建投票
+  permission_view_doodles: 查看投票
+  permission_answer_doodles: 参与投票
+  project_module_doodles: 投票  
+  text_doodle_answered: ' {{author}} 参与投票.'
+  text_doodle_with_requested_answer: ' {{author}} 邀请您参与投票'

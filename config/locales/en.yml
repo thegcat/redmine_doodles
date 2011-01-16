@@ -18,9 +18,10 @@ en:
   field_options: "Options"
   field_missing_answers: "Pending answers"
   permission_manage_doodles: "Manage doodles"
-  permission_create_doodles: "Delete doodles"
+  permission_delete_doodles: "Delete doodles"
   permission_create_doodles: "Create doodles"
   permission_view_doodles: "View doodles"
   permission_answer_doodles: "Answer doodles"
+  project_module_doodles: "Doodles" # Name of the permission group in administration > roles and permissions
   text_doodle_answered: "{{author}} answered the doodle."
   text_doodle_with_requested_answer: "{{author}} requests that you answer this doodle."
