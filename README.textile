@@ -21,6 +21,7 @@ h2. Translations
 * @fr@ by "JB Barth":https://github.com/jbbarth
 * @es@, @ca@ by Jan Wedekind (http://iris.cat/)
 * @zh@ by Peng Wang
+* @it@ by "Maurizio Di Florio":http://www.mauriziodiflorio.com
 
 h2. Help
 
