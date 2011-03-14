@@ -22,6 +22,7 @@ h2. Translations
 * @es@, @ca@ by Jan Wedekind (http://iris.cat/)
 * @zh@ by Peng Wang
 * @it@ by "Maurizio Di Florio":http://www.mauriziodiflorio.com
+* @sl@ by Erol
 
 h2. Help
 
