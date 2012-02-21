@@ -1,0 +1,4 @@
+<h1><%=h @doodle.project.name %>: <%= link_to(h(@doodle.title), @doodle_url) %></h1>
+<em><%=h @doodle.author %></em>
+
+<%= textilizable(@doodle, :description, :only_path => false) %>
