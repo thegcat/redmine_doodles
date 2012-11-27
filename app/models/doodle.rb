@@ -15,14 +15,29 @@ class Doodle < ActiveRecord::Base
   acts_as_activity_provider :find_options => {:include => [:project, :author]},
                             :author_key => :author_id
   
-  validates_presence_of :title, :options
+  validates :title, :options, :presence => true
   
   before_validation :sanitize_options
   
   after_create :add_author_as_watcher, :send_mails
   
   def results
-    @results ||= responses.empty? ? Array.new(options.length, 0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
+    old_answers = responses.map(&:answers)[0]
+    new_answers = responses.map(&:answers)[1]
+    answers = nil
+    if( !(old_answers.nil?) && !(new_answers.nil?) && !(old_answers.length == new_answers.length))
+      temp = Array.new(new_answers.length, false)
+      temp2 = old_answers.length < new_answers.length ? old_answers : new_answers
+      temp2.each_with_index do |el,i|
+        temp[i] = old_answers[i]
+      end
+      answers = [temp,new_answers]
+      responses.map(&:answers)[0] = temp
+    else
+      answers = responses.map(&:answers)
+    end
+    @results ||= responses.empty? ? Array.new(options.length, 0) : answers.transpose.map { |x| x.select { |v| v }.length }
+#    @results ||= responses.empty? ? Array.new(options.length, 0) : responses.map(&:answers).transpose.map { |x| x.select { |v| v }.length }
   end
   
   def active?
@@ -30,7 +45,7 @@ class Doodle < ActiveRecord::Base
   end
   
   def winning_columns
-    @winning_columns ||= self.results.max == 0 ? [] : self.results.enum_with_index.collect {|v,i| i if v == self.results.max}.compact
+    @winning_columns ||= self.results.max == 0 ? [] : self.results.each_with_index.collect {|v,i| i if v == self.results.max}.compact
   end
   
   def previewfy
@@ -61,8 +76,8 @@ class Doodle < ActiveRecord::Base
   end
   
   def send_mails
-    Mailer.deliver_doodle_added(self)
-    Mailer.deliver_doodle_added_with_answer_request(self)
+    #Mailer.deliver_doodle_added(self)
+    #Mailer.deliver_doodle_added_with_answer_request(self)
   end
   
   def add_author_as_watcher

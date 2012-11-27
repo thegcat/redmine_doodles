@@ -1,38 +1,46 @@
-<div class="contextual">
-<%= link_to_if_authorized(l(:label_doodle_new),
-                          {:controller => 'doodles', :action => 'new', :project_id => @project},
-                          :class => 'icon icon-add',
-                          :onclick => 'Element.show("add-doodle"); Form.Element.focus("doodle_title"); return false;') if @project %>
-</div>
+<% content_for :sidebar_right do %>
+  <% if @project && User.current.allowed_to?({:controller => 'doodles', :action => 'new'}, @project) %>
+    <%= link_to l(:label_doodle_new),
+                            {:controller => 'doodles', :action => 'new', :project_id => @project},
+                            :class => 'icon icon-add',
+                            :onclick => '$("#add-doodle").show(); $("#doodle_title").focus(); $("#preview").hide(); return false;' %>
+  <% end %>
+<%end%>
 
 <div id="add-doodle" style="display:none;">
 <h2><%= l(:label_doodle_new) %></h2>
-<% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'create', :project_id => @project }, :html => { :id => 'doodle-form' } do |f| %>
+<%= labelled_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'create', :project_id => @project }, :html => { :id => 'doodle-form' } do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_create) %>
-<%= link_to_remote l(:label_preview), 
+<%= link_to l(:label_preview), 
                    { :url => { :controller => 'doodles', :action => 'preview', :project_id => @project },
                      :method => 'post',
                      :update => 'preview',
+                     :remote => true, 
                      :with => "Form.serialize('doodle-form')"
                    }, :accesskey => accesskey(:preview) %> |
-<%= link_to l(:button_cancel), '#', :onclick => 'Element.hide("add-doodle")' %>
+<%= link_to l(:button_cancel), '#', :onclick => '$("#add-doodle").hide()' %>
 <% end if @project %>
-<div id="preview" class="doodle"></div>
 </div>
-
-<h2><%= l(:label_doodle_plural)%></h2>
-
-<% if @doodles.empty? %>
-<p class="nodata"><%= l(:label_no_data) %></p>
-<% else %>
-<% @doodles.each do |doodle| %>
-  <h3><%= link_to h(doodle.title), :controller => 'doodles', :action => 'show', :id => doodle %></h3>
-  <p class="author"><%= authoring doodle.created_on, doodle.author %></p>
-  <div class="wiki">
-  <%= textilizable(doodle.description[0,254] + (doodle.description[254].nil? ? "" : "…")) unless doodle.description.nil? %>
-  </div>
-<% end %>
-<% end %>
+<div id="preview" class="doodle">
+  <h2><%= l(:label_doodle_plural)%></h2>
+  
+  <% if @doodles.empty? %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+  <% else %>
+  <% @doodles.each do |doodle| %>
+    <%= link_to(doodle, :class => "link_to_doodle") do %>
+    <fieldset>
+      <div class="info">
+        <%= l(:doodle_ends) %> <%= format_date(doodle.expiry_date) %>
+      </div>
+      <h3><%= doodle.title %></h3>
+      <p class="author"><%= strip_tags(authoring doodle.created_on, doodle.author) %></p>
+      <%= textilizable(doodle.description[0,254] + (doodle.description[254].nil? ? "" : "…")) unless doodle.description.nil? %>
+    </fieldset>
+    <% end %>
+  <% end %>
+  <% end %>
+</div>
 
 <% html_title l(:label_doodle_plural) -%>

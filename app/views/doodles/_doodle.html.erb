@@ -1,33 +1,57 @@
-<div class="doodle">
-<table class="list doodle">
+<fieldset>
+<div class="list doodle">
+<table cellspacing="0" cellpadding="4">
   <col span="2" />
   <% @doodle.options.each_index do |i| %>
-    <col <%= "class=\"winner\"" if @winners.include?(i) %>/>
+    <col <%= 'class="winner"' if @winners.include?(i) %>/>
   <% end %>  
   <thead>
     <tr>
-      <td colspan="2"> </td>
+      <td> </td>
       <% @doodle.options.each_with_index do |option,i| %>
-        <th<%= " class=\"winner\"" if @winners.include?(i) %>><%=h option %></th>
+        <th<%= ' class="winner"' if @winners.include?(i) %> align="center"><%=h option %></th>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <% @responses.each do |response| %>
-      <tr class="<%= cycle('odd', 'even') %>">
-        <td class="gravatar"><%= avatar(response.author, :size => "24") %></td><td class="answeree"><%=h response.author.name %></td>
-      <% response.answers_with_css_classes.each_with_index do |answer_with_css,i| %>
-      <% answer, css = *answer_with_css %>
-        <td class="<%= css %>"><%= check_box_tag "answers[]", i, answer, :disabled => (!@doodle.active? || !@response || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
+
+    <% @responses.each do |res| %>
+      <tr class="<%= cycle('odd', 'even') %><%= ' current' if res.author == User.current %>">
+        <!--td class="gravatar"><%= avatar(res.author, :size => "24") %></td-->
+        <td class="answeree"><%= h res.author.name %></td>
+        <% p res.answers_with_css_classes %>
+      <% res.answers_with_css_classes.each_with_index do |answer_with_css,i| %>
+        <% unless @doodle.options[i].nil? %>
+        <% answer, css = *answer_with_css %>
+          <td class="<%= css %>" align="center"><%= check_box_tag "answers[]", i, answer, :disabled => (!@doodle.active? || !@res || !(res.author == User.current)), :onclick => "$(this).closest('.answer').toggleClass('yes').toggleClass('no')" %></td>
+        <% end %>
+      <% end %>
+      <% diff = @doodle.options.length - res.answers_with_css_classes.length %>
+      <% if diff > 0 %>
+        <% i = res.answers_with_css_classes.length %>
+        <% diff.times do %>
+          <% i += 1 %>
+          <td align="center"><%= check_box_tag "answers[]", i, nil, :disabled => (!@doodle.active? || !@res || !(res.author == User.current)), :onclick => "$(this).closest('.answer').toggleClass('yes').toggleClass('no')" %></td>
+        <% end %>
       <% end %>
       </tr>
     <% end %>
     <tr class="<%= cycle('odd', 'even') %> results">
-      <td class="gravatar"> </td> <td class="answeree"><%= l(:label_result_plural)%></td>
-      <% @doodle.results.each_with_index do |res,i| %>
-        <td<%= " class=\"winner\"" if @winners.include?(i) %>><%= res %></td>
+      <!--td class="gravatar"> </td--> 
+      <td class="answeree"><%= l(:label_result_plural)%></td>
+        <% @doodle.results.each_with_index do |res,i| %>
+        <% unless @doodle.options[i].nil? %>
+        <td class="<%= "winner" if @winners.include?(i) %>" align="center"><%= res %></td>
+        <% end %>
+      <% end %>
+      <% diff = @doodle.options.length - @doodle.results.length %>
+      <% if diff > 0 %>
+        <% diff.times do %>
+          <td align="center">0</td>
+        <% end %>
       <% end %>
     </tr>
   </tbody>
 </table>
 </div>
+</fieldset>

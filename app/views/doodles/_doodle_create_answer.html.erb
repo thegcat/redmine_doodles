@@ -1,4 +1,4 @@
-<% form_tag({:controller => 'doodle_answers', :action => 'create', :doodle_id => @doodle}, {:method => :post}) do %>
+<%= form_tag({:controller => 'doodle_answers', :action => 'create', :doodle_id => @doodle.id}, {:method => :post}) do %>
 
 <%= render :partial => 'doodle' %>
 

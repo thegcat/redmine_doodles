@@ -5,7 +5,7 @@ class DoodlesController < ApplicationController
   before_filter :find_doodle, :only => [:show, :destroy, :update, :lock, :edit]
   before_filter :authorize
   
-  verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
+  #verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
   
   helper :watchers
   include WatchersHelper
@@ -15,21 +15,23 @@ class DoodlesController < ApplicationController
   end
 
   def new
+    @doodle = Doodle.new()
   end
   
   def edit
   end
 
   def show
+    @doodle = Doodle.find(params[:id])
     @author = @doodle.author
     @responses = @doodle.responses
     @winners = @doodle.winning_columns
     # Give the current user an empty answer if she hasn't answered yet and the doodle is active
     if @doodle.active? && User.current.allowed_to?(:answer_doodles, @project)
-      @response = @responses.find_by_author_id(User.current.id)
-      @response ||= DoodleAnswers.new :author => User.current
-      @response.answers ||= Array.new(@doodle.options.size, false)
-      @responses = @responses | [ @response ]
+      @res = @responses.find_by_author_id(User.current.id)
+      @res ||= DoodleAnswers.new :author => User.current
+      @res.answers = Array.new(@doodle.options.size, false) if @res.answers.empty? || @res.answers.nil?
+      @responses = @responses | [ @res ]
     end
     # Code later needed for comments
     #@comments = @doodle.comments
@@ -54,6 +56,8 @@ class DoodlesController < ApplicationController
   end
   
   def update
+    expiry_date = Date.strptime(params[:doodle][:expiry_date], t("date.formats.default"))
+    params[:doodle][:expiry_date] = params[:doodle][:expiry_date].empty? ? '' : expiry_date.strftime("%d.%m.%Y")
     @doodle.attributes = params[:doodle]
     if @doodle.save
       flash[:notice] = l(:doodle_update_successful)
@@ -65,8 +69,9 @@ class DoodlesController < ApplicationController
   end
   
   def lock
+    @doodle = Doodle.find(params[:id])
     @doodle.update_attribute :locked, params[:locked]
-    redirect_to :action => 'show', :id => @doodle
+    redirect_to :action => 'show', :id => @doodle.id
   end
   
   def preview

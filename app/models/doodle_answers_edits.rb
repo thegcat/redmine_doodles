@@ -28,6 +28,6 @@ class DoodleAnswersEdits < ActiveRecord::Base
   private
   
   def send_mails
-    Mailer.deliver_doodle_answered(self)
+    #Mailer.deliver_doodle_answered(self)
   end
 end
