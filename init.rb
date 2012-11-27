@@ -1,9 +1,6 @@
-# encoding: utf-8
-
 require 'redmine'
-require 'dispatcher'
 
-Dispatcher.to_prepare do
+Rails.configuration.to_prepare do
   require_dependency 'project'
   require_dependency 'mailer'
   require 'redmine_doodles/patch_redmine_classes'
@@ -16,7 +13,7 @@ require_dependency 'redmine_doodles/view_hooks'
 
 Redmine::Plugin.register :redmine_doodles do
   name 'Redmine Doodles plugin'
-  author 'Felix Schäfer'
+  author 'Felix Schaefer'
   description 'Per project doodles'
   version '0.5.1'
   url 'https://orga.fachschaften.org/projects/redmine_doodles'

@@ -1,55 +1,64 @@
-<div class="contextual">
-<%= watcher_tag(@doodle, User.current) %>
-<%= link_to_if_authorized(l(:button_lock), {:action => 'lock', :id => @doodle, :locked => 1}, :method => :post, :class => 'icon icon-lock') if !@doodle.locked? %>
-<%= link_to_if_authorized(l(:button_unlock), {:action => 'lock', :id => @doodle, :locked => 0}, :method => :post, :class => 'icon icon-unlock') if @doodle.locked? %>
-<%= link_to_if_authorized l(:button_edit), 
-                          {:action => 'edit', :id => @doodle},
-                          :class => 'icon icon-edit',
-                          :accesskey => accesskey(:edit),
-                          :onclick => 'Element.show("edit-doodle"); return false;' %>
-<%= link_to_if_authorized(l(:button_delete), {:action => 'destroy'}, :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del') %>
-</div>
+<% content_for :sidebar_right do %>
+  <ul>
+    <li><%= watcher_tag(@doodle, User.current) %></li>
+    <%#= link_to_if_authorized(l(:button_lock), {:action => 'lock', :id => @doodle.id, :locked => 1}, :method => :post, :class => 'icon icon-lock') if !@doodle.locked? %>
+    <%#= link_to_if_authorized(l(:button_unlock), {:action => 'lock', :id => @doodle, :locked => 0}, :method => :post, :class => 'icon icon-unlock') if @doodle.locked? %>
+    <%# if User.current.allowed_to?({:controller => 'doodles', :action => 'edit'}, @project) || @doodle.author == User.current %>
+    <% if User.current.admin? || @doodle.author == User.current %>
+      <li><%= link_to l(:button_edit), 
+                                {:action => 'edit', :id => @doodle},
+                                :accesskey => accesskey(:edit),
+                                :onclick => '$("#edit-doodle").show(); $("#preview").hide(); return false;' %>
+      </li>
+    <% end %>
+    <%# if User.current.allowed_to?({:controller => 'doodles', :action => 'destroy'}, @project) || @doodle.author == User.current %>
+    <% if User.current.admin? || @doodle.author == User.current %>
+      <li><%= link_to l(:button_delete), {:action => 'destroy'}, :method => :delete, :data => {:confirm => l(:text_are_you_sure)} %></li>
+    <% end %>
+  </ul>
+<% end %>
 
-<h2><%= l(:label_doodle)%> #<%= @doodle.id %></h2>
+<h2><%= l(:label_doodle)%></h2>
 
 <% if authorize_for('doodles', 'edit') %>
 <div id="edit-doodle" style="display:none;">
-  <% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'update', :id => @doodle}, :html => { :id => 'doodle-form', :method => :put } do |f| %>
+  <%= labelled_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'update', :id => @doodle}, :html => { :id => 'doodle-form', :method => :put } do |f| %>
   <%= render :partial => 'form', :locals => { :f => f } %>
   <%= submit_tag l(:button_save) %>
-  <%= link_to_remote l(:label_preview), 
+  <%= link_to l(:label_preview), 
                      { :url => { :controller => 'doodles', :action => 'preview', :project_id => @project },
                        :method => 'post',
                        :update => 'preview',
+                       :remote => true,
                        :with => "Form.serialize('doodle-form')"
                      }, :accesskey => accesskey(:preview) %>
   <% end %>
-  <div id="preview" class="doodle"></div>
+  
 </div>
 <% end %>
 
-
-<div class="doodle details">
+<div id="preview" class="doodle">
+<div class="doodle details" style="clear:both">
   <%= avatar(@author, :size => "64") %>
-  <h3><%=h @doodle.title %></h3>
-  <p class="author">
+  <div class="info"><%=l(:field_expiry_date)%>: <%= format_date(@doodle.expiry_date) %></div>
+  <h2><%=h @doodle.title %></h2>
+  <div class="author">
     <%= authoring @doodle.created_on, @doodle.author %>
-  </p>
-  <p><strong><%=l(:field_expiry_date)%></strong>: <%= format_date(@doodle.expiry_date) %></p>
-  <% unless @doodle.should_answer.empty? -%>
-    <p><strong><%=l(:field_missing_answers)%></strong>: <%= @doodle.users_missing_answer.size %> <%= "(#{@doodle.users_missing_answer.collect(&:name).join(", ")})" if User.current == @doodle.author && !@doodle.users_missing_answer.empty? %></p>
-  <% end -%>
-  <hr />
+  </div>
   <p><strong><%=l(:field_description)%></strong></p>
   <div class="wiki">
   <%= textilizable(@doodle.description) %>
   </div>
+  <% unless @doodle.should_answer.empty? -%>
+    <p><strong><%=l(:field_missing_answers)%></strong>: <%= @doodle.users_missing_answer.size %> <%= "(#{@doodle.users_missing_answer.collect(&:name).join(", ")})" if User.current == @doodle.author && !@doodle.users_missing_answer.empty? %></p>
+  <% end -%>
 </div>
 
-<% unless @response %>
+<% unless @res %>
 <%= render :partial => 'doodle' %>
 <% else %>
-<%= render :partial => @response.new_record? ? 'doodle_create_answer' : 'doodle_update_answer' %>
+<%#= render :partial => 'doodle_create_answer' %>
+<%= render :partial => @res.new_record? ? 'doodle_create_answer' : 'doodle_update_answer' %>
 <% end %>
-
+</div>
 <% html_title "Doodle #{@doodle.id}: #{@doodle.title}" -%>

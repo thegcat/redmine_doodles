@@ -1,7 +1,7 @@
-<% form_tag({:controller => 'doodle_answers', :action => 'update', :id => @response}, {:method => :put}) do %>
+<%= form_tag({:controller => 'doodle_answers', :action => 'update', :id => @res}, {:method => :put}) do %>
 
 <%= render :partial => 'doodle' %>
 
-<%= submit_tag l(:button_update) %>
+<%= submit_tag l(:label_doodle_answer) %>
 
 <% end %>
