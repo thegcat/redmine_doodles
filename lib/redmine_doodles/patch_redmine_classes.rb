@@ -16,7 +16,7 @@ module Plugin
         end
       end
     end
-    
+
     module Mailer
       module ClassMethods
       end

@@ -1,20 +1,20 @@
 class DoodlesController < ApplicationController
   unloadable
-  
   before_filter :find_project, :except => [:show, :destroy, :update, :lock, :edit]
   before_filter :find_doodle, :only => [:show, :destroy, :update, :lock, :edit]
+
   before_filter :authorize
 
   helper :watchers
   include WatchersHelper
-  
+
   def index
     @doodles = @project.doodles.reverse
   end
 
   def new
   end
-  
+
   def edit
   end
 
@@ -38,7 +38,7 @@ class DoodlesController < ApplicationController
     @doodle.destroy
     redirect_to :action => 'index', :project_id => @project
   end
-  
+
   def create
     @doodle.attributes = params[:doodle]
     #@doodle.watcher_user_ids = params[:doodle]['watcher_user_ids']
@@ -50,7 +50,7 @@ class DoodlesController < ApplicationController
       render :action => 'new', :project_id => @project
     end
   end
-  
+
   def update
     @doodle.attributes = params[:doodle]
     if @doodle.save
@@ -61,12 +61,12 @@ class DoodlesController < ApplicationController
       redirect_to :action => 'edit', :id => @doodle
     end
   end
-  
+
   def lock
     @doodle.update_attribute :locked, params[:locked]
     redirect_to :action => 'show', :id => @doodle
   end
-  
+
   def preview
     if params[:doodle]
       @doodle = Doodle.new(params[:doodle]).previewfy
@@ -77,14 +77,14 @@ class DoodlesController < ApplicationController
       render :layout => false
     end
   end
-  
+
   private
-  
+
   def find_project
     @project = Project.find(params[:project_id])
     @doodle = Doodle.new(:project => @project, :author => User.current)
   end
-  
+
   def find_doodle
     @doodle = Doodle.find(params[:id], :include => [:project, :author, :responses, :should_answer])
     @project = @doodle.project

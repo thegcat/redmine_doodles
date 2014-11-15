@@ -1,6 +1,6 @@
 class DoodleAnswersController < ApplicationController
   unloadable
-  
+
   menu_item :doodles
 
   before_filter :find_doodle, :only => [:create]
@@ -12,13 +12,13 @@ class DoodleAnswersController < ApplicationController
     @response.save ? flash[:notice] = l(:doodle_answer_create_successful) : flash[:warning] = l(:doodle_answer_create_unsuccessful)
     redirect_to :controller => 'doodles', :action => 'show', :id => @doodle
   end
-  
+
   def update
     @response.answers = Array.new(@doodle.options.size) {|index| (params[:answers] || []).include?(index.to_s)}
     @response.save ? flash[:notice] = l(:doodle_answer_update_successful) : flash[:warning] = l(:doodle_answer_update_unsuccessful)
     redirect_to :controller => 'doodles', :action => 'show', :id => @doodle
   end
-  
+
   private
 
   def find_doodle
@@ -28,14 +28,14 @@ class DoodleAnswersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-  
+
   def find_doodle_answer
     @response = DoodleAnswers.find(params[:id], :include => [:author, {:doodle => :project}])
     puts @response
     @doodle = @response.doodle
     @project = @doodle.project
   end
-  
+
   def is_doodle_active?
     unless @doodle.active?
       flash[:error] = l(:doodle_inactive)
