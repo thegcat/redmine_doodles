@@ -29,9 +29,6 @@ class DoodlesController < ApplicationController
       @response.answers ||= Array.new(@doodle.options.size, false)
       @responses = @responses | [ @response ]
     end
-    # Code later needed for comments
-    #@comments = @doodle.comments
-    #@comments.reverse! if User.current.wants_comments_in_reverse_order?
   end
 
   def destroy

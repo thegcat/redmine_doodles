@@ -31,7 +31,6 @@ class DoodleAnswersController < ApplicationController
 
   def find_doodle_answer
     @response = DoodleAnswers.find(params[:id], :include => [:author, {:doodle => :project}])
-    puts @response
     @doodle = @response.doodle
     @project = @doodle.project
   end
