@@ -4,9 +4,7 @@ class DoodlesController < ApplicationController
   before_filter :find_project, :except => [:show, :destroy, :update, :lock, :edit]
   before_filter :find_doodle, :only => [:show, :destroy, :update, :lock, :edit]
   before_filter :authorize
-  
-  verify :method => :post, :only => [:lock], :redirect_to => { :action => :show }
-  
+
   helper :watchers
   include WatchersHelper
   

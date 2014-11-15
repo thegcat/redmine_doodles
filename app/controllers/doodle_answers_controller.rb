@@ -6,9 +6,7 @@ class DoodleAnswersController < ApplicationController
   before_filter :find_doodle, :only => [:create]
   before_filter :find_doodle_answer, :only => [:update]
   before_filter :authorize, :is_doodle_active?
-  
-  verify :method => :post, :only => [:create], :redirect_to => {:controller => 'doodles', :action => 'show', :id => :doodle_id}
-  
+
   def create
     @response.answers = Array.new(@doodle.options.size) {|index| (params[:answers] || []).include?(index.to_s)}
     @response.save ? flash[:notice] = l(:doodle_answer_create_successful) : flash[:warning] = l(:doodle_answer_create_unsuccessful)
