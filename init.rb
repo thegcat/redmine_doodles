@@ -12,9 +12,11 @@ Redmine::Plugin.register :redmine_doodles do
   name 'Redmine Doodles plugin'
   author 'Felix Schäfer'
   description 'Per project doodles'
-  version '0.5.1'
+  version '1.0.0'
   url 'https://orga.fachschaften.org/projects/redmine_doodles'
   author_url 'http://orga.fachschaften.org/users/3'
+
+  requires_redmine '2.5'
 
   project_module :doodles do
     permission :manage_doodles, {doodles: [:lock, :edit, :update]}, require: :member
