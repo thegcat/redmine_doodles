@@ -2,30 +2,29 @@
 <table class="list doodle">
   <col span="2" />
   <% @doodle.options.each_index do |i| %>
-    <col <%= "class=\"winner\"" if @winners.include?(i) %>/>
-  <% end %>  
+    <col <%= 'class="winner"' if @winners.include?(i) -%>/>
+  <% end %>
   <thead>
     <tr>
       <td colspan="2"> </td>
       <% @doodle.options.each_with_index do |option,i| %>
-        <th<%= " class=\"winner\"" if @winners.include?(i) %>><%=h option %></th>
+        <th <%= 'class="winner"' if @winners.include?(i) -%>><%= option -%></th>
       <% end %>
     </tr>
   </thead>
   <tbody>
     <% @responses.each do |response| %>
-      <tr class="<%= cycle('odd', 'even') %>">
-        <td class="gravatar"><%= avatar(response.author, :size => "24") %></td><td class="answeree"><%=h response.author.name %></td>
-      <% response.answers_with_css_classes.each_with_index do |answer_with_css,i| %>
-      <% answer, css = *answer_with_css %>
-        <td class="<%= css %>"><%= check_box_tag "answers[]", i, answer, :disabled => (!@doodle.active? || !@response || !(response.author == User.current)), :onclick => "$(this).up('.answer').toggleClassName('yes').toggleClassName('no')" %></td>
+      <tr class="<%= cycle 'odd', 'even' -%>">
+        <td class="gravatar"><%= avatar response.author, size: 24 -%></td><td class="answeree"><%= response.author.name -%></td>
+      <% response.answers_with_css_classes.each_with_index do |(answer,css),i| %>
+        <td class="<%= css -%>"><%= check_box_tag "answers[]", i, answer, disabled: (!@doodle.active? || !@response || !(response.author == User.current)), onclick: '$(this).closest(\'.answer\').toggleClass(\'yes no\'); return true;' -%></td>
       <% end %>
       </tr>
     <% end %>
-    <tr class="<%= cycle('odd', 'even') %> results">
-      <td class="gravatar"> </td> <td class="answeree"><%= l(:label_result_plural)%></td>
+    <tr class="<%= cycle 'odd', 'even' -%> results">
+      <td class="gravatar"> </td> <td class="answeree"><%=l :label_result_plural -%></td>
       <% @doodle.results.each_with_index do |res,i| %>
-        <td<%= " class=\"winner\"" if @winners.include?(i) %>><%= res %></td>
+        <td<%= ' class="winner"' if @winners.include?(i) -%>><%= res -%></td>
       <% end %>
     </tr>
   </tbody>

@@ -1,5 +1,5 @@
-<% (options.nil? ? Array.new(5, "") : (options + Array.new(options.length < 5 ? (5 - options.length) : 0,""))).each do |option| %>
+<% (options.nil? ? Array.new(5, '') : (options + Array.new(options.length < 5 ? (5 - options.length) : 0, ''))).each do |option| %>
   <div class="option">
-    <p><%= label "doodle_options_", nil, l(:field_option) %> <%= text_field_tag "doodle[options][]", option, :size => 60 %> <%= link_to_function l(:button_delete), "$(this).up('.option').remove()" %></p>
+    <p><%= label "doodle_options_", nil, l(:field_option) -%> <%= text_field_tag 'doodle[options][]', option, size: 60 -%> <%= link_to l(:button_delete), '#', onclick: raw('$(this).closest(\'div.option\').remove(); return false;') -%></p>
   </div>
 <% end %>

@@ -1,12 +1,7 @@
-<h2><%= l(:label_doodle) %> #<%= @doodle.id %></h2>
-<% labelled_tabular_form_for :doodle, @doodle, :url => { :controller => 'doodles', :action => 'update', :id => @doodle}, :html => { :id => 'doodle-form', :method => :put } do |f| %>
-<%= render :partial => 'form', :locals => { :f => f } %>
+<h2><%=l :label_doodle -%> #<%= @doodle.id -%></h2>
+<%= labelled_form_for @doodle, url: {controller: 'doodles', action: 'update', id: @doodle}, html: {id: 'doodle-form', method: :put} do |f| %>
+<%= render partial: 'form', locals: {f: f} %>
 <%= submit_tag l(:button_save) %>
-<%= link_to_remote l(:label_preview), 
-                   { :url => { :controller => 'doodles', :action => 'preview', :project_id => @project },
-                     :method => 'post',
-                     :update => 'preview',
-                     :with => "Form.serialize('doodle-form')"
-                   }, :accesskey => accesskey(:preview) %>
+<%= preview_link preview_project_doodles_path(@project), 'doodle-form' %>
 <% end if @project %>
 <div id="preview" class="doodle"></div>
